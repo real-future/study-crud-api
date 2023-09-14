@@ -17,28 +17,28 @@ class CustomTabBar: UIView {
     weak var delegate: CustomTabBarDelegate?
 
     
-    lazy var gridIcon: UIImageView = {
+    let gridIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "grid")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
-    lazy var videoIcon: UIImageView = {
+    let videoIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "videoIcon")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
-    lazy var tagIcon: UIImageView = {
+    let tagIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "tagIcon")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
-    lazy var sliderView: UIView = {
+    let sliderView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
         return view
@@ -102,18 +102,24 @@ class CustomTabBar: UIView {
     
     @objc func handleIconTap(_ gesture: UITapGestureRecognizer) {
         guard let view = gesture.view else { return }
-        
-        let targetX: CGFloat
+        let tabIndex: TabIndex
+           let targetX: CGFloat
+
         switch view {
-        case gridIcon:
-            targetX = 0
-        case videoIcon:
-            targetX = self.bounds.width / 3
-        case tagIcon:
-            targetX = (self.bounds.width / 3) * 2
-        default:
-            return
-        }
+            case gridIcon:
+                tabIndex = .first
+                targetX = 0
+            case videoIcon:
+                tabIndex = .second
+                targetX = self.bounds.width / 3
+            case tagIcon:
+                tabIndex = .third
+                targetX = (self.bounds.width / 3) * 2
+            default:
+                return
+            }
+            
+            delegate?.didSelectTab(at: tabIndex)
         
         // 애니메이션으로 슬라이더 이동
         self.sliderLeadingConstraint?.update(offset: targetX)

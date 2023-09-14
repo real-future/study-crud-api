@@ -13,12 +13,19 @@ enum TabIndex {
     case third
 }
 
-class MyGalleryPageViewController: UIViewController {
+
+class MyGalleryPageViewController: UIViewController, CustomTabBarDelegate {
+    func didSelectTab(at index: TabIndex) {
+        changeActiveTab(to: index)
+
+    }
+   
     
     
+    let profileImage = UIImage(named: "menuIcon")
     var tabIndex: TabIndex = .first
     
-    lazy var profileImageView: UIImageView = {
+    let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "profileImage")
         imageView.contentMode = .scaleAspectFill
@@ -27,7 +34,7 @@ class MyGalleryPageViewController: UIViewController {
         return imageView
     }()
     
-    lazy var nameLabel: UILabel = {
+    let nameLabel: UILabel = {
         let label = UILabel()
         label.text = "르탄이"
         label.font = UIFont(name: "OpenSans-Bold", size: 14)
@@ -165,11 +172,14 @@ class MyGalleryPageViewController: UIViewController {
     func changeActiveTab(to newTab: TabIndex) {
            self.tabIndex = newTab
            self.collectionView.reloadData()
-       }
+
+    }
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        customTabBar.delegate = self
         self.view.backgroundColor = .white
         
         self.navigationItem.title = "nabaecamp"
@@ -191,7 +201,7 @@ class MyGalleryPageViewController: UIViewController {
         }
     }
     
-    
+
     
     func setupProfileSection() {
         let postStack = createLabelStack(number: "7", text: "Post")
@@ -301,13 +311,13 @@ extension MyGalleryPageViewController: UICollectionViewDataSource, UICollectionV
                 return cell
             }
     
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.frame.width - 4) / 3
         return CGSize(width: width, height: width)
     }
 }
 
+// MARK: - ddfdf
 extension MyGalleryPageViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if tabIndex == .first && indexPath.item == 1 {

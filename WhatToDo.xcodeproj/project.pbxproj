@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		D8A6B2272AB3085400E66BBE /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D8A6B2262AB3085400E66BBE /* OpenSans-Bold.ttf */; };
 		D8A6B2292AB30C9D00E66BBE /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D8A6B2282AB30C9C00E66BBE /* OpenSans-Regular.ttf */; };
-		D8A6B22B2AB324A000E66BBE /* Danjo-bold-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = D8A6B22A2AB324A000E66BBE /* Danjo-bold-Regular.otf */; };
 		D8A6B22D2AB34BA000E66BBE /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A6B22C2AB34BA000E66BBE /* CustomTabBar.swift */; };
 		D8C7874F2AB2985900ED145C /* MyGalleryPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C7874E2AB2985900ED145C /* MyGalleryPageViewController.swift */; };
 		D8C7877C2AB2E35200ED145C /* UIFontExtention.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C7877B2AB2E35200ED145C /* UIFontExtention.swift */; };
@@ -47,7 +46,6 @@
 /* Begin PBXFileReference section */
 		D8A6B2262AB3085400E66BBE /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		D8A6B2282AB30C9C00E66BBE /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
-		D8A6B22A2AB324A000E66BBE /* Danjo-bold-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Danjo-bold-Regular.otf"; sourceTree = "<group>"; };
 		D8A6B22C2AB34BA000E66BBE /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
 		D8C7874E2AB2985900ED145C /* MyGalleryPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGalleryPageViewController.swift; sourceTree = "<group>"; };
 		D8C7877B2AB2E35200ED145C /* UIFontExtention.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFontExtention.swift; sourceTree = "<group>"; };
@@ -105,7 +103,6 @@
 		D8C787542AB29B6900ED145C /* Font */ = {
 			isa = PBXGroup;
 			children = (
-				D8A6B22A2AB324A000E66BBE /* Danjo-bold-Regular.otf */,
 				D8A6B2282AB30C9C00E66BBE /* OpenSans-Regular.ttf */,
 				D8A6B2262AB3085400E66BBE /* OpenSans-Bold.ttf */,
 				D8C7877B2AB2E35200ED145C /* UIFontExtention.swift */,
@@ -329,7 +326,6 @@
 			files = (
 				D8FDA74A2AB1FDB4002864DF /* LaunchScreen.storyboard in Resources */,
 				D8FDA7472AB1FDB4002864DF /* Assets.xcassets in Resources */,
-				D8A6B22B2AB324A000E66BBE /* Danjo-bold-Regular.otf in Resources */,
 				D8A6B2292AB30C9D00E66BBE /* OpenSans-Regular.ttf in Resources */,
 				D8A6B2272AB3085400E66BBE /* OpenSans-Bold.ttf in Resources */,
 			);
