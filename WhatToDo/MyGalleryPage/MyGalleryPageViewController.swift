@@ -7,24 +7,23 @@
 
 import UIKit
 
+//MARK: - enum
 enum TabIndex {
     case first
     case second
     case third
 }
 
-
-class MyGalleryPageViewController: UIViewController, CustomTabBarDelegate {
-    func didSelectTab(at index: TabIndex) {
-        changeActiveTab(to: index)
-
-    }
+//MARK: - MyGalleryPageViewController
+class MyGalleryPageViewController: UIViewController {
+    
    
-    
-    
+    //MARK: - 프로퍼티
     let profileImage = UIImage(named: "menuIcon")
     var tabIndex: TabIndex = .first
     
+    
+    //MARK: - UI 요소
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "profileImage")
@@ -42,7 +41,7 @@ class MyGalleryPageViewController: UIViewController, CustomTabBarDelegate {
         return label
     }()
     
-    lazy var descriptionLabel: UILabel = {
+    let descriptionLabel: UILabel = {
         let label = UILabel()
         label.text = "iOS Developer🍎"
         label.font = UIFont(name: "OpenSans-Regular", size: 14)
@@ -50,14 +49,14 @@ class MyGalleryPageViewController: UIViewController, CustomTabBarDelegate {
         return label
     }()
     
-    lazy var websiteLabel: UILabel = {
+    let websiteLabel: UILabel = {
         let label = UILabel()
         label.text = "spartacodingclub.kr"
         label.font = UIFont(name: "OpenSans-Regular", size: 14)
         label.textColor = .urlBlue
         label.numberOfLines = 1
         label.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(openWebsite))
+        let tap = UITapGestureRecognizer(target: MyGalleryPageViewController.self, action: #selector(openWebsite))
         label.addGestureRecognizer(tap)
         return label
     }()
@@ -70,7 +69,7 @@ class MyGalleryPageViewController: UIViewController, CustomTabBarDelegate {
     }()
     
     
-    lazy var followButton: UIButton = {
+    let followButton: UIButton = {
         let button = UIButton()
         button.setTitle("Follow", for: .normal)
         button.titleLabel?.font = UIFont(name: "OpenSans-Bold", size: 14)
@@ -80,7 +79,7 @@ class MyGalleryPageViewController: UIViewController, CustomTabBarDelegate {
         return button
     }()
     
-    lazy var messageButton: UIButton = {
+    let messageButton: UIButton = {
         let button = UIButton()
         button.setTitle("Message", for: .normal)
         button.titleLabel?.font = UIFont(name: "OpenSans-Bold", size: 14)
@@ -92,7 +91,7 @@ class MyGalleryPageViewController: UIViewController, CustomTabBarDelegate {
         return button
     }()
     
-    lazy var moreButton: UIButton = {
+    let moreButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "chevron.down"), for: .normal)
         button.tintColor = .black
@@ -111,13 +110,13 @@ class MyGalleryPageViewController: UIViewController, CustomTabBarDelegate {
         return stackView
     }()
     
-    lazy var dividerView: UIView = {
+    let dividerView: UIView = {
         let view = UIView()
         view.backgroundColor = .moreLightGrey
         return view
     }()
     
-    lazy var customTabBar: CustomTabBar = {
+    let customTabBar: CustomTabBar = {
         let tabBar = CustomTabBar()
         return tabBar
     }()
@@ -134,10 +133,25 @@ class MyGalleryPageViewController: UIViewController, CustomTabBarDelegate {
         cv.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         return cv
     }()
-
     
+    let customBottomTabBar: CustomBottomTabBar = {
+        let tabBar = CustomBottomTabBar()
+        return tabBar
+    }()
     
-    
+    lazy var labelsStack: UIStackView = {
+        let postStack = createLabelStack(number: "7", text: "Post")
+        let followerStack = createLabelStack(number: "0", text: "Follower")
+        let followingStack = createLabelStack(number: "0", text: "Following")
+        
+        let stack = UIStackView(arrangedSubviews: [postStack, followerStack, followingStack])
+        stack.axis = .horizontal
+        stack.alignment = .fill
+        stack.distribution = .fillEqually
+        stack.spacing = 16
+        
+        return stack
+    }()
     
     
     func createLabelStack(number: String, text: String) -> UIStackView {
@@ -164,30 +178,22 @@ class MyGalleryPageViewController: UIViewController, CustomTabBarDelegate {
         textLabel.snp.makeConstraints { make in
             make.height.equalTo(19)
         }
-        
-        
         return stack
     }
     
-    func changeActiveTab(to newTab: TabIndex) {
-           self.tabIndex = newTab
-           self.collectionView.reloadData()
-
-    }
     
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        customTabBar.delegate = self
-        self.view.backgroundColor = .white
-        
+    func setupNavigationBar() {
         self.navigationItem.title = "nabaecamp"
         let menuButton = UIBarButtonItem(image: UIImage(named: "menuIcon"), style: .plain, target: self, action: #selector(menuButtonTapped))
         menuButton.tintColor = .black
         self.navigationItem.rightBarButtonItem = menuButton
+    }
+    
+    
+    func changeActiveTab(to newTab: TabIndex) {
+        self.tabIndex = newTab
+        self.collectionView.reloadData()
         
-        setupProfileSection()
     }
     
     
@@ -195,15 +201,34 @@ class MyGalleryPageViewController: UIViewController, CustomTabBarDelegate {
         print("Menu button tapped")
     }
     
+    
     @objc func openWebsite() {
         if let url = URL(string: "http://spartacodingclub.kr") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
     }
     
-
     
-    func setupProfileSection() {
+    //MARK: - Lifecycle
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        customTabBar.delegate = self
+        setupUI()
+    }
+    
+    
+    //MARK: - setupUI
+    func setupUI() {
+        self.view.backgroundColor = .white
+        setupNavigationBar()
+        setupAutoLayout()
+        
+    }
+    
+    
+    //MARK: - 오토레이아웃
+    func setupAutoLayout() {
         let postStack = createLabelStack(number: "7", text: "Post")
         let followerStack = createLabelStack(number: "0", text: "Follower")
         let followingStack = createLabelStack(number: "0", text: "Following")
@@ -222,9 +247,9 @@ class MyGalleryPageViewController: UIViewController, CustomTabBarDelegate {
         view.addSubview(dividerView)
         view.addSubview(customTabBar)
         view.addSubview(collectionView)
+        view.addSubview(customBottomTabBar)
         
-        
-        
+         
         profileImageView.snp.makeConstraints { (make) in
             make.left.equalTo(view.snp.left).offset(14)
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(14)
@@ -235,6 +260,7 @@ class MyGalleryPageViewController: UIViewController, CustomTabBarDelegate {
             make.right.equalToSuperview().offset(-28)
             make.centerY.equalTo(profileImageView)
         }
+        
         infoStackView.snp.makeConstraints { (make) in
             make.top.equalTo(profileImageView.snp.bottom).offset(14)
             make.left.equalTo(profileImageView)
@@ -255,7 +281,6 @@ class MyGalleryPageViewController: UIViewController, CustomTabBarDelegate {
             make.centerY.equalTo(followMessageStackView)
         }
         
-        
         followButton.snp.makeConstraints { make in
             make.width.equalTo(followMessageStackView.snp.width).multipliedBy(0.5).offset(-4)
         }
@@ -270,7 +295,6 @@ class MyGalleryPageViewController: UIViewController, CustomTabBarDelegate {
             make.right.equalTo(moreButton.snp.right)
             make.height.equalTo(1)
         }
-
         
         customTabBar.snp.makeConstraints { make in
             make.left.right.equalTo(view)
@@ -282,42 +306,53 @@ class MyGalleryPageViewController: UIViewController, CustomTabBarDelegate {
             make.left.right.bottom.equalTo(view)
             make.top.equalTo(customTabBar.snp.bottom)
         }
+        
+        customBottomTabBar.snp.makeConstraints { make in
+            make.left.right.bottom.equalTo(view)
+            make.height.equalTo(85)
+        }
     }
 }
 
-extension MyGalleryPageViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
+// MARK: - Extension : UICollectionViewDelegateFlowLayout
+extension MyGalleryPageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch tabIndex {
-                case .first:
-                    return 9
-                case .second:
-                    return 9
-                case .third:
-                    return 9
-                }
+        case .first:
+            return 9
+        case .second:
+            return 3
+        case .third:
+            return 7
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         switch tabIndex {
-                case .first:
-                    cell.backgroundColor = .green
-                case .second:
-                    cell.backgroundColor = .red
-                case .third:
-                    cell.backgroundColor = .yellow
-                }
+        case .first:
+            cell.backgroundColor = .green
+        case .second:
+            cell.backgroundColor = .red
+        case .third:
+            cell.backgroundColor = .yellow
+        }
+        return cell
+    }
+}
 
-                return cell
-            }
-    
+
+// MARK: - Extension : UICollectionViewDataSource
+extension MyGalleryPageViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.frame.width - 4) / 3
         return CGSize(width: width, height: width)
     }
 }
 
-// MARK: - ddfdf
+
+// MARK: - Extension : UICollectionViewDelegate
 extension MyGalleryPageViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if tabIndex == .first && indexPath.item == 1 {
@@ -327,3 +362,12 @@ extension MyGalleryPageViewController: UICollectionViewDelegate {
         }
     }
 }
+
+
+// MARK: - Extension : CustomTabBarDelegate
+extension MyGalleryPageViewController: CustomTabBarDelegate {
+    func didSelectTab(at index: TabIndex) {
+        changeActiveTab(to: index)
+    }
+}
+

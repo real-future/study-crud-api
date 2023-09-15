@@ -17,6 +17,7 @@ class CustomTabBar: UIView {
     weak var delegate: CustomTabBarDelegate?
 
     
+    //MARK: - 요소 
     let gridIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "grid")
@@ -44,11 +45,13 @@ class CustomTabBar: UIView {
         return view
     }()
     
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
     }
     
+    //나중에 스토리보드로 작업할 가능성이 있을 때 필요한 생성자
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         setupView()

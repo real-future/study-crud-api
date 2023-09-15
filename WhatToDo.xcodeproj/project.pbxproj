@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D86702392AB414D300B390F0 /* CustomBottomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86702382AB414D300B390F0 /* CustomBottomTabBar.swift */; };
+		D867023C2AB4256C00B390F0 /* MyGalleryPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D867023B2AB4256C00B390F0 /* MyGalleryPageView.swift */; };
 		D8A6B2272AB3085400E66BBE /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D8A6B2262AB3085400E66BBE /* OpenSans-Bold.ttf */; };
 		D8A6B2292AB30C9D00E66BBE /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D8A6B2282AB30C9C00E66BBE /* OpenSans-Regular.ttf */; };
 		D8A6B22D2AB34BA000E66BBE /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A6B22C2AB34BA000E66BBE /* CustomTabBar.swift */; };
@@ -44,6 +46,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D86702382AB414D300B390F0 /* CustomBottomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomTabBar.swift; sourceTree = "<group>"; };
+		D867023B2AB4256C00B390F0 /* MyGalleryPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGalleryPageView.swift; sourceTree = "<group>"; };
 		D8A6B2262AB3085400E66BBE /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		D8A6B2282AB30C9C00E66BBE /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		D8A6B22C2AB34BA000E66BBE /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
@@ -192,8 +196,10 @@
 		D8FDA7702AB1FE39002864DF /* MyGalleryPage */ = {
 			isa = PBXGroup;
 			children = (
-				D8C7874E2AB2985900ED145C /* MyGalleryPageViewController.swift */,
 				D8A6B22C2AB34BA000E66BBE /* CustomTabBar.swift */,
+				D86702382AB414D300B390F0 /* CustomBottomTabBar.swift */,
+				D8C7874E2AB2985900ED145C /* MyGalleryPageViewController.swift */,
+				D867023B2AB4256C00B390F0 /* MyGalleryPageView.swift */,
 			);
 			path = MyGalleryPage;
 			sourceTree = "<group>";
@@ -355,9 +361,11 @@
 				D8FDA73F2AB1FDB3002864DF /* ViewController.swift in Sources */,
 				D8C7874F2AB2985900ED145C /* MyGalleryPageViewController.swift in Sources */,
 				D8FDA7792AB20900002864DF /* UIColorExtension.swift in Sources */,
+				D86702392AB414D300B390F0 /* CustomBottomTabBar.swift in Sources */,
 				D8C7877C2AB2E35200ED145C /* UIFontExtention.swift in Sources */,
 				D8A6B22D2AB34BA000E66BBE /* CustomTabBar.swift in Sources */,
 				D8FDA73B2AB1FDB3002864DF /* AppDelegate.swift in Sources */,
+				D867023C2AB4256C00B390F0 /* MyGalleryPageView.swift in Sources */,
 				D8FDA73D2AB1FDB3002864DF /* SceneDelegate.swift in Sources */,
 				D8FDA7732AB1FEA3002864DF /* HomePageViewController.swift in Sources */,
 				D8FDA7452AB1FDB3002864DF /* WhatToDo.xcdatamodeld in Sources */,
