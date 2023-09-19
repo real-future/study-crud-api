@@ -63,7 +63,17 @@ class DonePageViewController: UIViewController {
         todos = todoDataManager.todoList.filter { $0.isCompleted }
         tableView.reloadData()
     }
+    
+    private func saveChangesToCoreData() {
+        do {
+            try todoDataManager.context.save()
+        } catch {
+            print("Error saving Core Data changes: \(error)")
+        }
+    }
 }
+
+
 
 // MARK: - UITableViewDataSource
 extension DonePageViewController: UITableViewDataSource {
@@ -78,7 +88,7 @@ extension DonePageViewController: UITableViewDataSource {
         cell.configure(isCompleted: todo.isCompleted, title: todo.title ?? "")
         
         cell.delegate = self
-
+        
         
         return cell
     }
@@ -88,6 +98,19 @@ extension DonePageViewController: UITableViewDataSource {
 extension DonePageViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70.0
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // Core Data에서 삭제
+            let taskToDelete = todos[indexPath.row]
+            todoDataManager.context.delete(taskToDelete)
+            saveChangesToCoreData()
+            
+            // 로컬 데이터 배열에서 삭제하고 테이블 뷰 업데이트
+            todos.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
 }
 

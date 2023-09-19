@@ -132,7 +132,7 @@ class TodoPageViewController: UIViewController {
             toastLabel.removeFromSuperview()
         })
     }
-
+    
     
     
     // MARK: - Data
@@ -147,68 +147,68 @@ class TodoPageViewController: UIViewController {
     }
     
     private func saveChangesToCoreData() {
-            do {
-                try todoDataManager.context.save()
-            } catch {
-                print("Error saving Core Data changes: \(error)")
-            }
+        do {
+            try todoDataManager.context.save()
+        } catch {
+            print("Error saving Core Data changes: \(error)")
         }
+    }
 }
 
 
 // MARK: - TodoTableViewCellDelegate
 extension TodoPageViewController: TodoTableViewCellDelegate {
     func contentAreaTapped(in cell: TodoTableViewCell) {
-            if let indexPath = tableView.indexPath(for: cell) {
-                let todo = todos[indexPath.row]
-                let updateAlert = UIAlertController(title: "Update Task", message: "Please modify the content", preferredStyle: .alert)
-                
-                updateAlert.addTextField { (textField: UITextField) in
-                    textField.text = todo.title
-                    textField.delegate = self
-                }
-                
-                // 취소 버튼
-                let cancel = UIAlertAction(title: "Cancel", style: .default)
-                
-                // 업데이트 버튼
-                let update = UIAlertAction(title: "Update", style: .default) { _ in
-                    if let updatedContent = updateAlert.textFields?.first?.text {
-                        // Core Data에 변경 사항을 저장
-                        todo.title = updatedContent
-                        todo.modifyDate = Date() // 수정된 날짜 설정
-                        self.saveChangesToCoreData()
-                        
-                        // 셀 업데이트
-                        cell.configure(isCompleted: todo.isCompleted, title: updatedContent)
-                        cell.updateDateLabel(createDate: todo.createDate!, modifyDate: todo.modifyDate)
-                    }
-                }
-                
-                // 액션 추가
-                updateAlert.addAction(cancel)
-                updateAlert.addAction(update)
-                
-                // 알림 창 표시
-                self.present(updateAlert, animated: true)
+        if let indexPath = tableView.indexPath(for: cell) {
+            let todo = todos[indexPath.row]
+            let updateAlert = UIAlertController(title: "Update Task", message: "Please modify the content", preferredStyle: .alert)
+            
+            updateAlert.addTextField { (textField: UITextField) in
+                textField.text = todo.title
+                textField.delegate = self
             }
+            
+            // 취소 버튼
+            let cancel = UIAlertAction(title: "Cancel", style: .default)
+            
+            // 업데이트 버튼
+            let update = UIAlertAction(title: "Update", style: .default) { _ in
+                if let updatedContent = updateAlert.textFields?.first?.text {
+                    // Core Data에 변경 사항을 저장
+                    todo.title = updatedContent
+                    todo.modifyDate = Date() // 수정된 날짜 설정
+                    self.saveChangesToCoreData()
+                    
+                    // 셀 업데이트
+                    cell.configure(isCompleted: todo.isCompleted, title: updatedContent)
+                    cell.updateDateLabel(createDate: todo.createDate!, modifyDate: todo.modifyDate)
+                }
+            }
+            
+            // 액션 추가
+            updateAlert.addAction(cancel)
+            updateAlert.addAction(update)
+            
+            // 알림 창 표시
+            self.present(updateAlert, animated: true)
         }
+    }
     
     func checkButtonTapped(in cell: TodoTableViewCell) {
         if let indexPath = tableView.indexPath(for: cell) {
             let todo = todos[indexPath.row]
             todo.isCompleted.toggle()
-
+            
             // Core Data에 변경 사항 저장
             do {
                 try todoDataManager.context.save()
             } catch {
                 print("Error saving Core Data changes: \(error)")
             }
-
+            
             // 변경된 isCompleted 상태를 반영하여 테이블 뷰 업데이트
             fetchDataAndReloadTableView()
-
+            
             // isCompleted가 true일 경우 토스트 메시지 띄우기
             if todo.isCompleted {
                 showToast(message: "🎉 완료된 할 일은 donePage에서 확인하실 수 있습니다. 🎉")
@@ -216,7 +216,7 @@ extension TodoPageViewController: TodoTableViewCellDelegate {
         }
     }
 }
-    
+
 
 
 // MARK: - UITableViewDataSource
@@ -229,7 +229,7 @@ extension TodoPageViewController: UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TodoTableViewCell", for: indexPath) as! TodoTableViewCell
         let todo = todos[indexPath.row]
         cell.configure(isCompleted: todo.isCompleted, title: todo.title ?? "")
-
+        
         
         // 델리게이트 설정
         cell.delegate = self
@@ -251,6 +251,19 @@ extension TodoPageViewController: UITableViewDataSource {
 extension TodoPageViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70.0
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            // Core Data에서 삭제
+            let todoToDelete = todos[indexPath.row]
+            todoDataManager.context.delete(todoToDelete)
+            saveChangesToCoreData()
+            
+            // 로컬 데이터 배열에서 삭제하고 테이블 뷰 업데이트
+            todos.remove(at: indexPath.row)
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        }
     }
 }
 
