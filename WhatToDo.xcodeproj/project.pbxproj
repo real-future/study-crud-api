@@ -10,6 +10,9 @@
 		D856CAB92AB9CCC40082505F /* TodoData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D856CAB72AB9CCC40082505F /* TodoData+CoreDataClass.swift */; };
 		D856CABA2AB9CCC40082505F /* TodoData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D856CAB82AB9CCC40082505F /* TodoData+CoreDataProperties.swift */; };
 		D856CABF2AB9E8940082505F /* DonePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D856CABE2AB9E8940082505F /* DonePageViewController.swift */; };
+		D856CAC22AB9F38C0082505F /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D856CAC12AB9F38C0082505F /* ProfileModel.swift */; };
+		D856CAC42AB9F3B40082505F /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D856CAC32AB9F3B40082505F /* ProfileViewModel.swift */; };
+		D856CAC62AB9F3CE0082505F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D856CAC52AB9F3CE0082505F /* ProfileViewController.swift */; };
 		D86702392AB414D300B390F0 /* CustomBottomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86702382AB414D300B390F0 /* CustomBottomTabBar.swift */; };
 		D867023C2AB4256C00B390F0 /* MyGalleryPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D867023B2AB4256C00B390F0 /* MyGalleryPageView.swift */; };
 		D867023F2AB440FC00B390F0 /* TodoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D867023E2AB440FC00B390F0 /* TodoTableViewCell.swift */; };
@@ -55,6 +58,9 @@
 		D856CAB72AB9CCC40082505F /* TodoData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D856CAB82AB9CCC40082505F /* TodoData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D856CABE2AB9E8940082505F /* DonePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonePageViewController.swift; sourceTree = "<group>"; };
+		D856CAC12AB9F38C0082505F /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		D856CAC32AB9F3B40082505F /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		D856CAC52AB9F3CE0082505F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D86702382AB414D300B390F0 /* CustomBottomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomTabBar.swift; sourceTree = "<group>"; };
 		D867023B2AB4256C00B390F0 /* MyGalleryPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGalleryPageView.swift; sourceTree = "<group>"; };
 		D867023E2AB440FC00B390F0 /* TodoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTableViewCell.swift; sourceTree = "<group>"; };
@@ -108,6 +114,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D856CAC02AB9F2AF0082505F /* Profile Page */ = {
+			isa = PBXGroup;
+			children = (
+				D856CAC12AB9F38C0082505F /* ProfileModel.swift */,
+				D856CAC32AB9F3B40082505F /* ProfileViewModel.swift */,
+				D856CAC52AB9F3CE0082505F /* ProfileViewController.swift */,
+			);
+			path = "Profile Page";
+			sourceTree = "<group>";
+		};
 		D867023D2AB43F9C00B390F0 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
@@ -174,6 +190,7 @@
 				D8FDA76E2AB1FE2B002864DF /* TodoPage */,
 				D8FDA76F2AB1FE34002864DF /* DonePage */,
 				D8FDA7702AB1FE39002864DF /* MyGalleryPage */,
+				D856CAC02AB9F2AF0082505F /* Profile Page */,
 				D8FDA7712AB1FE47002864DF /* CatPage */,
 				D8FDA73A2AB1FDB3002864DF /* AppDelegate.swift */,
 				D8FDA73C2AB1FDB3002864DF /* SceneDelegate.swift */,
@@ -393,6 +410,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8FDA73F2AB1FDB3002864DF /* ViewController.swift in Sources */,
+				D856CAC42AB9F3B40082505F /* ProfileViewModel.swift in Sources */,
+				D856CAC62AB9F3CE0082505F /* ProfileViewController.swift in Sources */,
 				D8C7874F2AB2985900ED145C /* MyGalleryPageViewController.swift in Sources */,
 				D8FDA7792AB20900002864DF /* UIColorExtension.swift in Sources */,
 				D867023F2AB440FC00B390F0 /* TodoTableViewCell.swift in Sources */,
@@ -401,6 +420,7 @@
 				D8A6B22D2AB34BA000E66BBE /* CustomTabBar.swift in Sources */,
 				D856CABF2AB9E8940082505F /* DonePageViewController.swift in Sources */,
 				D86702442AB444FB00B390F0 /* TodoPageViewController.swift in Sources */,
+				D856CAC22AB9F38C0082505F /* ProfileModel.swift in Sources */,
 				D8FDA73B2AB1FDB3002864DF /* AppDelegate.swift in Sources */,
 				D867023C2AB4256C00B390F0 /* MyGalleryPageView.swift in Sources */,
 				D8FDA73D2AB1FDB3002864DF /* SceneDelegate.swift in Sources */,

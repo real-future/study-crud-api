@@ -222,10 +222,29 @@ class MyGalleryPageViewController: UIViewController {
     //MARK: - setupUI
     func setupUI() {
         self.view.backgroundColor = .white
+        setupGestureForProfileImageView()
         setupNavigationBar()
         setupAutoLayout()
         
     }
+    
+    func setupGestureForProfileImageView() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(profileImageViewTapped))
+        profileImageView.isUserInteractionEnabled = true
+        profileImageView.addGestureRecognizer(tapGestureRecognizer)
+    }
+
+    
+    @objc func profileImageViewTapped() {
+        let profileModel = ProfileModel(userName: "진미래", userAge: 26)
+        let profileViewModel = ProfileViewModel(profile: profileModel)
+        
+        let profileViewController = ProfileViewController()
+        profileViewController.viewModel = profileViewModel
+        profileViewController.modalPresentationStyle = .automatic
+        self.present(profileViewController, animated: true, completion: nil)
+    }
+
     
     
     //MARK: - 오토레이아웃
