@@ -188,6 +188,10 @@ extension HomePageViewController: UITableViewDelegate {
 
         
         switch indexPath.row {
+        case 0:
+            let todoPageVC = TodoPageViewController()
+            self.navigationController?.pushViewController(todoPageVC, animated: true)
+            
         case 2:
             let myGalleryPageVC = MyGalleryPageViewController()
             self.navigationController?.pushViewController(myGalleryPageVC, animated: true)

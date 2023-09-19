@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D856CAB92AB9CCC40082505F /* TodoData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D856CAB72AB9CCC40082505F /* TodoData+CoreDataClass.swift */; };
+		D856CABA2AB9CCC40082505F /* TodoData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D856CAB82AB9CCC40082505F /* TodoData+CoreDataProperties.swift */; };
 		D86702392AB414D300B390F0 /* CustomBottomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86702382AB414D300B390F0 /* CustomBottomTabBar.swift */; };
 		D867023C2AB4256C00B390F0 /* MyGalleryPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D867023B2AB4256C00B390F0 /* MyGalleryPageView.swift */; };
+		D867023F2AB440FC00B390F0 /* TodoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D867023E2AB440FC00B390F0 /* TodoTableViewCell.swift */; };
+		D86702422AB441CC00B390F0 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86702412AB441CC00B390F0 /* CoreDataManager.swift */; };
+		D86702442AB444FB00B390F0 /* TodoPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86702432AB444FB00B390F0 /* TodoPageViewController.swift */; };
 		D8A6B2272AB3085400E66BBE /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D8A6B2262AB3085400E66BBE /* OpenSans-Bold.ttf */; };
 		D8A6B2292AB30C9D00E66BBE /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D8A6B2282AB30C9C00E66BBE /* OpenSans-Regular.ttf */; };
 		D8A6B22D2AB34BA000E66BBE /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A6B22C2AB34BA000E66BBE /* CustomTabBar.swift */; };
@@ -46,8 +51,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D856CAB72AB9CCC40082505F /* TodoData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoData+CoreDataClass.swift"; sourceTree = "<group>"; };
+		D856CAB82AB9CCC40082505F /* TodoData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoData+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		D86702382AB414D300B390F0 /* CustomBottomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomTabBar.swift; sourceTree = "<group>"; };
 		D867023B2AB4256C00B390F0 /* MyGalleryPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGalleryPageView.swift; sourceTree = "<group>"; };
+		D867023E2AB440FC00B390F0 /* TodoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTableViewCell.swift; sourceTree = "<group>"; };
+		D86702412AB441CC00B390F0 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		D86702432AB444FB00B390F0 /* TodoPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoPageViewController.swift; sourceTree = "<group>"; };
 		D8A6B2262AB3085400E66BBE /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		D8A6B2282AB30C9C00E66BBE /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		D8A6B22C2AB34BA000E66BBE /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
@@ -96,6 +106,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D867023D2AB43F9C00B390F0 /* cell */ = {
+			isa = PBXGroup;
+			children = (
+				D867023E2AB440FC00B390F0 /* TodoTableViewCell.swift */,
+			);
+			path = cell;
+			sourceTree = "<group>";
+		};
+		D86702402AB441C100B390F0 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D856CAB72AB9CCC40082505F /* TodoData+CoreDataClass.swift */,
+				D856CAB82AB9CCC40082505F /* TodoData+CoreDataProperties.swift */,
+				D86702412AB441CC00B390F0 /* CoreDataManager.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		D8C787512AB29AAA00ED145C /* Color */ = {
 			isa = PBXGroup;
 			children = (
@@ -137,6 +165,8 @@
 		D8FDA7392AB1FDB3002864DF /* WhatToDo */ = {
 			isa = PBXGroup;
 			children = (
+				D8FDA7432AB1FDB3002864DF /* WhatToDo.xcdatamodeld */,
+				D86702402AB441C100B390F0 /* Model */,
 				D8FDA7772AB2088D002864DF /* Util */,
 				D8FDA76D2AB1FE18002864DF /* HomePage */,
 				D8FDA76E2AB1FE2B002864DF /* TodoPage */,
@@ -149,7 +179,6 @@
 				D8FDA7462AB1FDB4002864DF /* Assets.xcassets */,
 				D8FDA7482AB1FDB4002864DF /* LaunchScreen.storyboard */,
 				D8FDA74B2AB1FDB4002864DF /* Info.plist */,
-				D8FDA7432AB1FDB3002864DF /* WhatToDo.xcdatamodeld */,
 			);
 			path = WhatToDo;
 			sourceTree = "<group>";
@@ -182,6 +211,8 @@
 		D8FDA76E2AB1FE2B002864DF /* TodoPage */ = {
 			isa = PBXGroup;
 			children = (
+				D867023D2AB43F9C00B390F0 /* cell */,
+				D86702432AB444FB00B390F0 /* TodoPageViewController.swift */,
 			);
 			path = TodoPage;
 			sourceTree = "<group>";
@@ -361,14 +392,19 @@
 				D8FDA73F2AB1FDB3002864DF /* ViewController.swift in Sources */,
 				D8C7874F2AB2985900ED145C /* MyGalleryPageViewController.swift in Sources */,
 				D8FDA7792AB20900002864DF /* UIColorExtension.swift in Sources */,
+				D867023F2AB440FC00B390F0 /* TodoTableViewCell.swift in Sources */,
 				D86702392AB414D300B390F0 /* CustomBottomTabBar.swift in Sources */,
 				D8C7877C2AB2E35200ED145C /* UIFontExtention.swift in Sources */,
 				D8A6B22D2AB34BA000E66BBE /* CustomTabBar.swift in Sources */,
+				D86702442AB444FB00B390F0 /* TodoPageViewController.swift in Sources */,
 				D8FDA73B2AB1FDB3002864DF /* AppDelegate.swift in Sources */,
 				D867023C2AB4256C00B390F0 /* MyGalleryPageView.swift in Sources */,
 				D8FDA73D2AB1FDB3002864DF /* SceneDelegate.swift in Sources */,
+				D856CAB92AB9CCC40082505F /* TodoData+CoreDataClass.swift in Sources */,
+				D86702422AB441CC00B390F0 /* CoreDataManager.swift in Sources */,
 				D8FDA7732AB1FEA3002864DF /* HomePageViewController.swift in Sources */,
 				D8FDA7452AB1FDB3002864DF /* WhatToDo.xcdatamodeld in Sources */,
+				D856CABA2AB9CCC40082505F /* TodoData+CoreDataProperties.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
