@@ -41,10 +41,8 @@ class TodoPageViewController: UIViewController {
         setNavigationBar()
         view.backgroundColor = .white
         
-        // TableView 추가
         view.addSubview(tableView)
         
-        // AutoLayout 설정 (SnapKit 이용)
         tableView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
@@ -69,10 +67,9 @@ class TodoPageViewController: UIViewController {
     @objc func addButtonTapped() {
         let addAlert = UIAlertController(title: "Add a Task", message: "Please enter within 28 characters", preferredStyle: .alert)
         
-        // 텍스트 필드를 추가하고, 해당 텍스트 필드의 델리게이트를 self로 설정합니다.
         addAlert.addTextField {(textField: UITextField) in
             textField.placeholder = "28 characters or less"
-            textField.delegate = self // 클래스가 UITextFieldDelegate 프로토콜을 준수한다고 가정
+            textField.delegate = self
         }
         
         // 취소 버튼
@@ -80,7 +77,6 @@ class TodoPageViewController: UIViewController {
         
         // 저장 버튼
         let save = UIAlertAction(title: "Save", style: .default) { _ in
-            // 저장 로직을 이곳에 구현합니다.
             if let title = addAlert.textFields?.first?.text {
                 self.addNewTask(title: title)
             }
@@ -117,7 +113,6 @@ class TodoPageViewController: UIViewController {
         todoDataManager.fetchData()
         todos = todoDataManager.todoList
         
-        // 테이블 뷰를 리로드하는 코드 추가
         tableView.reloadData()
     }
     
@@ -151,7 +146,6 @@ extension TodoPageViewController: TodoTableViewCellDelegate {
                 let todo = todos[indexPath.row]
                 let updateAlert = UIAlertController(title: "Update Task", message: "Please modify the content", preferredStyle: .alert)
                 
-                // 텍스트 필드를 추가하고, 해당 텍스트 필드의 델리게이트를 self로 설정합니다.
                 updateAlert.addTextField { (textField: UITextField) in
                     textField.text = todo.title
                     textField.delegate = self
@@ -165,10 +159,12 @@ extension TodoPageViewController: TodoTableViewCellDelegate {
                     if let updatedContent = updateAlert.textFields?.first?.text {
                         // Core Data에 변경 사항을 저장
                         todo.title = updatedContent
+                        todo.modifyDate = Date() // 수정된 날짜 설정
                         self.saveChangesToCoreData()
                         
                         // 셀 업데이트
                         cell.configure(isCompleted: todo.isCompleted, title: updatedContent)
+                        cell.updateDateLabel(createDate: todo.createDate!, modifyDate: todo.modifyDate)
                     }
                 }
                 
@@ -239,7 +235,6 @@ extension TodoPageViewController: UITextFieldDelegate {
         
         // 업데이트된 텍스트의 길이를 확인
         if updatedText.count > 28 {
-            // 흔드는 애니메이션을 적용, 테두리 색상을 red
             shakeTextField(textField)
             return false
         }
@@ -255,7 +250,6 @@ extension TodoPageViewController: UITextFieldDelegate {
         animation.values = [-20.0, 20.0, -20.0, 20.0, -10.0, 10.0, -5.0, 5.0, 0.0]
         textField.layer.add(animation, forKey: "shake")
         
-        // 테두리 색상 red
         textField.layer.borderColor = UIColor.red.cgColor
         textField.layer.borderWidth = 1.0
     }

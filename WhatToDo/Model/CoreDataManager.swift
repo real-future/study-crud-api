@@ -98,6 +98,24 @@ final class CoreDataManager {
         }
     }
     
+    
+    func updateTodoData(id: UUID, newTitle: String, completion: @escaping () -> Void) {
+        let context = appDelegate.persistentContainer.viewContext
+        if let index = todoList.firstIndex(where: { $0.id == id }) {
+            todoList[index].title = newTitle
+            todoList[index].modifyDate = Date() // 수정 날짜를 현재 날짜로 설정
+
+            do {
+                try context.save()
+                completion()
+            } catch {
+                print("Error updating todo data: \(error)")
+            }
+        }
+    }
+
+    
+    
 }
 
 

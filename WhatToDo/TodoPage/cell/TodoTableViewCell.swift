@@ -115,10 +115,8 @@ class TodoTableViewCell: UITableViewCell {
         
         var isCompleted = false
 
-        // 완료 상태를 토글합니다.
         isCompleted.toggle()
 
-        // titleLabel의 텍스트 색상을 변경합니다.
         titleLabel.textColor = isCompleted ? .lightGray : .darkGray
         
         delegate?.checkButtonTapped(in: self)
@@ -139,4 +137,17 @@ class TodoTableViewCell: UITableViewCell {
           titleLabel.textColor = isCompleted ? .lightGray : .darkGray
           updateCheckButtonImage(isCompleted: isCompleted)
       }
+    
+    func updateDateLabel(createDate: Date, modifyDate: Date?) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy.MM.dd HH:mm"
+        var dateString = dateFormatter.string(from: createDate)
+        
+        if let modifyDate = modifyDate {
+            dateString += " (수정됨: \(dateFormatter.string(from: modifyDate)))"
+        }
+        
+        dateLabel.text = dateString
+    }
+
 }
