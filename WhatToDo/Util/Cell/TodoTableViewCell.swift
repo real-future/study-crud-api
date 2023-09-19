@@ -68,7 +68,7 @@ class TodoTableViewCell: UITableViewCell {
     // MARK: - UI Setup
     private func setupUI() {
         //🔴방법1
-//        self.contentView.bringSubviewToFront(checkButton)
+        self.contentView.bringSubviewToFront(checkButton)
         
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(contentAreaTapped))
@@ -81,9 +81,9 @@ class TodoTableViewCell: UITableViewCell {
         addSubview(stackView)
         addSubview(checkButton)
         
-        //🔴 방법 2
-                contentView.addSubview(stackView)
-                contentView.addSubview(checkButton)
+//        //🔴 방법 2
+//                contentView.addSubview(stackView)
+//                contentView.addSubview(checkButton)
         
         
         

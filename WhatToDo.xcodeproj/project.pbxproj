@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D856CAB92AB9CCC40082505F /* TodoData+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D856CAB72AB9CCC40082505F /* TodoData+CoreDataClass.swift */; };
 		D856CABA2AB9CCC40082505F /* TodoData+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D856CAB82AB9CCC40082505F /* TodoData+CoreDataProperties.swift */; };
+		D856CABF2AB9E8940082505F /* DonePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D856CABE2AB9E8940082505F /* DonePageViewController.swift */; };
 		D86702392AB414D300B390F0 /* CustomBottomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86702382AB414D300B390F0 /* CustomBottomTabBar.swift */; };
 		D867023C2AB4256C00B390F0 /* MyGalleryPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D867023B2AB4256C00B390F0 /* MyGalleryPageView.swift */; };
 		D867023F2AB440FC00B390F0 /* TodoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D867023E2AB440FC00B390F0 /* TodoTableViewCell.swift */; };
@@ -53,6 +54,7 @@
 /* Begin PBXFileReference section */
 		D856CAB72AB9CCC40082505F /* TodoData+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoData+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D856CAB82AB9CCC40082505F /* TodoData+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TodoData+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		D856CABE2AB9E8940082505F /* DonePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonePageViewController.swift; sourceTree = "<group>"; };
 		D86702382AB414D300B390F0 /* CustomBottomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomTabBar.swift; sourceTree = "<group>"; };
 		D867023B2AB4256C00B390F0 /* MyGalleryPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGalleryPageView.swift; sourceTree = "<group>"; };
 		D867023E2AB440FC00B390F0 /* TodoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTableViewCell.swift; sourceTree = "<group>"; };
@@ -106,12 +108,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D867023D2AB43F9C00B390F0 /* cell */ = {
+		D867023D2AB43F9C00B390F0 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
 				D867023E2AB440FC00B390F0 /* TodoTableViewCell.swift */,
 			);
-			path = cell;
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		D86702402AB441C100B390F0 /* Model */ = {
@@ -211,7 +213,6 @@
 		D8FDA76E2AB1FE2B002864DF /* TodoPage */ = {
 			isa = PBXGroup;
 			children = (
-				D867023D2AB43F9C00B390F0 /* cell */,
 				D86702432AB444FB00B390F0 /* TodoPageViewController.swift */,
 			);
 			path = TodoPage;
@@ -220,6 +221,7 @@
 		D8FDA76F2AB1FE34002864DF /* DonePage */ = {
 			isa = PBXGroup;
 			children = (
+				D856CABE2AB9E8940082505F /* DonePageViewController.swift */,
 			);
 			path = DonePage;
 			sourceTree = "<group>";
@@ -245,6 +247,7 @@
 		D8FDA7772AB2088D002864DF /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				D867023D2AB43F9C00B390F0 /* Cell */,
 				D8C787542AB29B6900ED145C /* Font */,
 				D8C787512AB29AAA00ED145C /* Color */,
 			);
@@ -396,6 +399,7 @@
 				D86702392AB414D300B390F0 /* CustomBottomTabBar.swift in Sources */,
 				D8C7877C2AB2E35200ED145C /* UIFontExtention.swift in Sources */,
 				D8A6B22D2AB34BA000E66BBE /* CustomTabBar.swift in Sources */,
+				D856CABF2AB9E8940082505F /* DonePageViewController.swift in Sources */,
 				D86702442AB444FB00B390F0 /* TodoPageViewController.swift in Sources */,
 				D8FDA73B2AB1FDB3002864DF /* AppDelegate.swift in Sources */,
 				D867023C2AB4256C00B390F0 /* MyGalleryPageView.swift in Sources */,

@@ -192,6 +192,10 @@ extension HomePageViewController: UITableViewDelegate {
             let todoPageVC = TodoPageViewController()
             self.navigationController?.pushViewController(todoPageVC, animated: true)
             
+        case 1:
+            let donePageVC = DonePageViewController()
+            self.navigationController?.pushViewController(donePageVC, animated: true)
+            
         case 2:
             let myGalleryPageVC = MyGalleryPageViewController()
             self.navigationController?.pushViewController(myGalleryPageVC, animated: true)

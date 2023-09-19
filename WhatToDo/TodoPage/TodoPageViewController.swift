@@ -110,13 +110,29 @@ class TodoPageViewController: UIViewController {
         appDelegate.saveContext()
         
         // 새로운 데이터를 가져오고 테이블 뷰를 리로드
-        todoDataManager.fetchData()
-        todos = todoDataManager.todoList
-        
-        tableView.reloadData()
+        fetchDataAndReloadTableView()
     }
     
-    
+    func showToast(message: String, duration: TimeInterval = 4.0) {
+        let toastLabel = UILabel(frame: CGRect(x: 16, y: self.view.frame.size.height - 100, width: self.view.frame.size.width - 32, height: 35))
+        toastLabel.backgroundColor = UIColor.skyBlue
+        toastLabel.textColor = UIColor.white
+        toastLabel.textAlignment = .center
+        toastLabel.text = message
+        toastLabel.alpha = 1.0
+        toastLabel.layer.cornerRadius = 10
+        toastLabel.clipsToBounds = true
+        toastLabel.font = UIFont.systemFont(ofSize: 12)
+        
+        self.view.addSubview(toastLabel)
+        
+        UIView.animate(withDuration: duration, delay: 0.2, options: .curveEaseOut, animations: {
+            toastLabel.alpha = 0.0
+        }, completion: { _ in
+            toastLabel.removeFromSuperview()
+        })
+    }
+
     
     
     // MARK: - Data
@@ -124,8 +140,9 @@ class TodoPageViewController: UIViewController {
     private func fetchDataAndReloadTableView() {
         // 데이터 불러오기
         todoDataManager.fetchData()
+        // isCompleted가 false인 할 일만 필터링
+        todos = todoDataManager.todoList.filter { !$0.isCompleted }
         // 테이블 뷰 리로드
-        todos = todoDataManager.todoList
         tableView.reloadData()
     }
     
@@ -181,9 +198,21 @@ extension TodoPageViewController: TodoTableViewCellDelegate {
         if let indexPath = tableView.indexPath(for: cell) {
             let todo = todos[indexPath.row]
             todo.isCompleted.toggle()
-            cell.configure(isCompleted: todo.isCompleted, title: todo.title ?? "")
+
             // Core Data에 변경 사항 저장
-            saveChangesToCoreData()
+            do {
+                try todoDataManager.context.save()
+            } catch {
+                print("Error saving Core Data changes: \(error)")
+            }
+
+            // 변경된 isCompleted 상태를 반영하여 테이블 뷰 업데이트
+            fetchDataAndReloadTableView()
+
+            // isCompleted가 true일 경우 토스트 메시지 띄우기
+            if todo.isCompleted {
+                showToast(message: "🎉 완료된 할 일은 donePage에서 확인하실 수 있습니다. 🎉")
+            }
         }
     }
 }
