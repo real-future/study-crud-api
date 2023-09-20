@@ -59,7 +59,7 @@ class CatViewController: UIViewController {
         
         
         self.navigationController?.navigationBar.tintColor = .skyBlue
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.skyBlue ?? .blue]
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.black]
     }
     
     

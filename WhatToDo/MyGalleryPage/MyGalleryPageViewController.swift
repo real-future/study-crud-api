@@ -236,7 +236,7 @@ class MyGalleryPageViewController: UIViewController {
 
     
     @objc func profileImageViewTapped() {
-        let profileModel = ProfileModel(userName: "진미래", userAge: 26)
+        let profileModel = ProfileModel(userName: "르탄이", userAge: 26)
         let profileViewModel = ProfileViewModel(profile: profileModel)
         
         let profileViewController = ProfileViewController()
