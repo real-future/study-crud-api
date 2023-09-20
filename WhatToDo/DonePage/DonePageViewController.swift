@@ -102,16 +102,27 @@ extension DonePageViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            // Core Data에서 삭제
-            let taskToDelete = todos[indexPath.row]
-            todoDataManager.context.delete(taskToDelete)
-            saveChangesToCoreData()
+            let alert = UIAlertController(title: "삭제 확인", message: "이 작업을 정말 삭제하시겠습니까?", preferredStyle: .alert)
             
-            // 로컬 데이터 배열에서 삭제하고 테이블 뷰 업데이트
-            todos.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            alert.addAction(UIAlertAction(title: "삭제", style: .destructive, handler: { (_) in
+                // Core Data에서 삭제
+                let taskToDelete = self.todos[indexPath.row]
+                self.todoDataManager.context.delete(taskToDelete)
+                
+                // Core Data에 변경 사항 저장
+                self.saveChangesToCoreData()
+                
+                // 로컬 데이터 배열에서 삭제하고 테이블 뷰 업데이트
+                self.todos.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .fade)
+            }))
+            
+            alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
+            
+            self.present(alert, animated: true, completion: nil)
         }
     }
+
 }
 
 // MARK: - TodoTableViewCellDelegate
