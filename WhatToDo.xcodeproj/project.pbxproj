@@ -18,6 +18,7 @@
 		D867023F2AB440FC00B390F0 /* TodoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D867023E2AB440FC00B390F0 /* TodoTableViewCell.swift */; };
 		D86702422AB441CC00B390F0 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86702412AB441CC00B390F0 /* CoreDataManager.swift */; };
 		D86702442AB444FB00B390F0 /* TodoPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86702432AB444FB00B390F0 /* TodoPageViewController.swift */; };
+		D8767B262ABA870D00683264 /* CatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8767B252ABA870D00683264 /* CatViewController.swift */; };
 		D8A6B2272AB3085400E66BBE /* OpenSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D8A6B2262AB3085400E66BBE /* OpenSans-Bold.ttf */; };
 		D8A6B2292AB30C9D00E66BBE /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D8A6B2282AB30C9C00E66BBE /* OpenSans-Regular.ttf */; };
 		D8A6B22D2AB34BA000E66BBE /* CustomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8A6B22C2AB34BA000E66BBE /* CustomTabBar.swift */; };
@@ -66,6 +67,7 @@
 		D867023E2AB440FC00B390F0 /* TodoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTableViewCell.swift; sourceTree = "<group>"; };
 		D86702412AB441CC00B390F0 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		D86702432AB444FB00B390F0 /* TodoPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoPageViewController.swift; sourceTree = "<group>"; };
+		D8767B252ABA870D00683264 /* CatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CatViewController.swift; sourceTree = "<group>"; };
 		D8A6B2262AB3085400E66BBE /* OpenSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Bold.ttf"; sourceTree = "<group>"; };
 		D8A6B2282AB30C9C00E66BBE /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		D8A6B22C2AB34BA000E66BBE /* CustomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTabBar.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 		D8FDA7712AB1FE47002864DF /* CatPage */ = {
 			isa = PBXGroup;
 			children = (
+				D8767B252ABA870D00683264 /* CatViewController.swift */,
 			);
 			path = CatPage;
 			sourceTree = "<group>";
@@ -423,6 +426,7 @@
 				D856CAC22AB9F38C0082505F /* ProfileModel.swift in Sources */,
 				D8FDA73B2AB1FDB3002864DF /* AppDelegate.swift in Sources */,
 				D867023C2AB4256C00B390F0 /* MyGalleryPageView.swift in Sources */,
+				D8767B262ABA870D00683264 /* CatViewController.swift in Sources */,
 				D8FDA73D2AB1FDB3002864DF /* SceneDelegate.swift in Sources */,
 				D856CAB92AB9CCC40082505F /* TodoData+CoreDataClass.swift in Sources */,
 				D86702422AB441CC00B390F0 /* CoreDataManager.swift in Sources */,

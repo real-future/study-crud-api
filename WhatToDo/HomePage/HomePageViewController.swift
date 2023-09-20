@@ -199,6 +199,12 @@ extension HomePageViewController: UITableViewDelegate {
         case 2:
             let myGalleryPageVC = MyGalleryPageViewController()
             self.navigationController?.pushViewController(myGalleryPageVC, animated: true)
+            
+            
+        case 3:
+            let catPageVC = CatViewController()
+            self.navigationController?.pushViewController(catPageVC, animated: true)
+            
         default:
             break
         }
