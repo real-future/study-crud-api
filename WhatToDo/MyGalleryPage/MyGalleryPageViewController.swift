@@ -18,13 +18,36 @@ enum TabIndex {
 //MARK: - MyGalleryPageViewController
 class MyGalleryPageViewController: UIViewController {
     
-   
+    
     //MARK: - 프로퍼티
     let profileImage = UIImage(named: "menuIcon")
     var tabIndex: TabIndex = .first
     
     
     //MARK: - UI 요소
+    
+    let customNavigationBar: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        return view
+    }()
+    
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "nabaecamp"
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        return label
+    }()
+    
+    let closeButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Back", for: .normal)
+        button.setTitleColor(.skyBlue, for: .normal)
+        button.addTarget(self, action: #selector(closeButtonTapped), for: .touchUpInside)
+        return button
+    }()
+    
+    
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "profileImage")
@@ -233,7 +256,7 @@ class MyGalleryPageViewController: UIViewController {
         profileImageView.isUserInteractionEnabled = true
         profileImageView.addGestureRecognizer(tapGestureRecognizer)
     }
-
+    
     
     @objc func profileImageViewTapped() {
         let profileModel = ProfileModel(userName: "르탄이", userAge: 26)
@@ -244,7 +267,11 @@ class MyGalleryPageViewController: UIViewController {
         profileViewController.modalPresentationStyle = .automatic
         self.present(profileViewController, animated: true, completion: nil)
     }
-
+    
+    @objc func closeButtonTapped() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     
     
     //MARK: - 오토레이아웃
@@ -268,70 +295,89 @@ class MyGalleryPageViewController: UIViewController {
         view.addSubview(customTabBar)
         view.addSubview(collectionView)
         view.addSubview(customBottomTabBar)
+        view.addSubview(customNavigationBar)
+        customNavigationBar.addSubview(titleLabel)
+        customNavigationBar.addSubview(closeButton)
         
-         
-        profileImageView.snp.makeConstraints { (make) in
-            make.left.equalTo(view.snp.left).offset(14)
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(14)
-            make.width.height.equalTo(100)
-        }
-        
-        labelsStack.snp.makeConstraints { (make) in
-            make.right.equalToSuperview().offset(-28)
-            make.centerY.equalTo(profileImageView)
-        }
-        
-        infoStackView.snp.makeConstraints { (make) in
-            make.top.equalTo(profileImageView.snp.bottom).offset(14)
-            make.left.equalTo(profileImageView)
-            make.right.lessThanOrEqualTo(labelsStack)
-        }
-        
-        followMessageStackView.snp.makeConstraints { make in
-            make.height.equalTo(30)
-            make.top.equalTo(infoStackView.snp.bottom).offset(14)
-            make.left.equalTo(profileImageView)
-            make.right.lessThanOrEqualTo(moreButton.snp.left).offset(-8)
-        }
-        
-        moreButton.snp.makeConstraints { make in
-            make.left.equalTo(followMessageStackView.snp.right).offset(8)
-            make.right.equalTo(view.snp.right).offset(-14)
-            make.width.height.equalTo(30)
-            make.centerY.equalTo(followMessageStackView)
-        }
-        
-        followButton.snp.makeConstraints { make in
-            make.width.equalTo(followMessageStackView.snp.width).multipliedBy(0.5).offset(-4)
-        }
-        
-        messageButton.snp.makeConstraints { make in
-            make.width.equalTo(followMessageStackView.snp.width).multipliedBy(0.5).offset(-4)
-        }
-        
-        dividerView.snp.makeConstraints { make in
-            make.top.equalTo(followMessageStackView.snp.bottom).offset(10)
-            make.left.equalTo(profileImageView)
-            make.right.equalTo(moreButton.snp.right)
-            make.height.equalTo(1)
-        }
-        
-        customTabBar.snp.makeConstraints { make in
+        customNavigationBar.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.left.right.equalTo(view)
-            make.height.equalTo(35)
-            make.top.equalTo(dividerView.snp.bottom).offset(2)
+            make.height.equalTo(44)  // 네비게이션 바 높이
         }
         
-        collectionView.snp.makeConstraints { make in
-            make.left.right.bottom.equalTo(view)
-            make.top.equalTo(customTabBar.snp.bottom)
+        titleLabel.snp.makeConstraints { make in
+            make.centerX.equalTo(customNavigationBar)
+            make.centerY.equalTo(customNavigationBar)
         }
         
-        customBottomTabBar.snp.makeConstraints { make in
-            make.left.right.bottom.equalTo(view)
-            make.height.equalTo(85)
-        }
+        closeButton.snp.makeConstraints { make in
+            make.left.equalTo(customNavigationBar.snp.left).offset(16)
+            make.centerY.equalTo(customNavigationBar)
+        
     }
+    
+    profileImageView.snp.makeConstraints { (make) in
+        make.left.equalTo(view.snp.left).offset(14)
+        make.top.equalTo(titleLabel.snp.bottom).offset(14)
+        make.width.height.equalTo(100)
+    }
+    
+    labelsStack.snp.makeConstraints { (make) in
+        make.right.equalToSuperview().offset(-28)
+        make.centerY.equalTo(profileImageView)
+    }
+    
+    infoStackView.snp.makeConstraints { (make) in
+        make.top.equalTo(profileImageView.snp.bottom).offset(14)
+        make.left.equalTo(profileImageView)
+        make.right.lessThanOrEqualTo(labelsStack)
+    }
+    
+    followMessageStackView.snp.makeConstraints { make in
+        make.height.equalTo(30)
+        make.top.equalTo(infoStackView.snp.bottom).offset(14)
+        make.left.equalTo(profileImageView)
+        make.right.lessThanOrEqualTo(moreButton.snp.left).offset(-8)
+    }
+    
+    moreButton.snp.makeConstraints { make in
+        make.left.equalTo(followMessageStackView.snp.right).offset(8)
+        make.right.equalTo(view.snp.right).offset(-14)
+        make.width.height.equalTo(30)
+        make.centerY.equalTo(followMessageStackView)
+    }
+    
+    followButton.snp.makeConstraints { make in
+        make.width.equalTo(followMessageStackView.snp.width).multipliedBy(0.5).offset(-4)
+    }
+    
+    messageButton.snp.makeConstraints { make in
+        make.width.equalTo(followMessageStackView.snp.width).multipliedBy(0.5).offset(-4)
+    }
+    
+    dividerView.snp.makeConstraints { make in
+        make.top.equalTo(followMessageStackView.snp.bottom).offset(10)
+        make.left.equalTo(profileImageView)
+        make.right.equalTo(moreButton.snp.right)
+        make.height.equalTo(1)
+    }
+    
+    customTabBar.snp.makeConstraints { make in
+        make.left.right.equalTo(view)
+        make.height.equalTo(35)
+        make.top.equalTo(dividerView.snp.bottom).offset(2)
+    }
+    
+    collectionView.snp.makeConstraints { make in
+        make.left.right.bottom.equalTo(view)
+        make.top.equalTo(customTabBar.snp.bottom)
+    }
+    
+    customBottomTabBar.snp.makeConstraints { make in
+        make.left.right.bottom.equalTo(view)
+        make.height.equalTo(85)
+    }
+}
 }
 
 
