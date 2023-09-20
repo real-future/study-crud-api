@@ -114,6 +114,9 @@ class HomePageViewController: UIViewController {
     }
     
     private func setupConstraints() {
+        tableView.isScrollEnabled = false
+
+        
         topBoxView.snp.makeConstraints { (make) in
             make.top.equalTo(self.view.snp.top)
             make.left.equalTo(self.view.snp.left)
