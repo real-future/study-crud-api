@@ -61,7 +61,7 @@ class HomePageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-
+        
         setupConstraints()
     }
     
@@ -77,11 +77,11 @@ class HomePageViewController: UIViewController {
         
         tableView.backgroundColor = .clear
         tableView.separatorColor = .clear
-
+        
     }
     
     
-
+    
     
     
     private func createButtonCell(withTitle title: String) -> UIView {
@@ -150,16 +150,16 @@ extension HomePageViewController: UITableViewDataSource {
         return buttonTitles.count
     }
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-           cell.tintColor = .white
-       }
+        cell.tintColor = .white
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "buttonCell", for: indexPath)
         
         //화살표 흰색으로
         let accessoryImageView = UIImageView(image: UIImage(systemName: "chevron.right"))
-           accessoryImageView.tintColor = .white
-           cell.accessoryView = accessoryImageView
+        accessoryImageView.tintColor = .white
+        cell.accessoryView = accessoryImageView
         
         let title = buttonTitles[indexPath.row]
         
@@ -168,9 +168,9 @@ extension HomePageViewController: UITableViewDataSource {
         cell.textLabel?.textColor = .white
         cell.backgroundColor = .skyBlue
         cell.tintColor = .white
-
         
-//        cell.accessoryType = .disclosureIndicator
+        
+        //        cell.accessoryType = .disclosureIndicator
         
         return cell
     }
@@ -178,14 +178,14 @@ extension HomePageViewController: UITableViewDataSource {
 
 extension HomePageViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            //전체 높이 / 셀의 개수
-            return tableView.frame.height / CGFloat(buttonTitles.count)
-        }
+        //전체 높이 / 셀의 개수
+        return tableView.frame.height / CGFloat(buttonTitles.count)
+    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-       
-
+        
+        
         
         switch indexPath.row {
         case 0:
@@ -198,7 +198,8 @@ extension HomePageViewController: UITableViewDelegate {
             
         case 2:
             let myGalleryPageVC = MyGalleryPageViewController()
-            self.navigationController?.pushViewController(myGalleryPageVC, animated: true)
+            myGalleryPageVC.modalPresentationStyle = .fullScreen
+            self.present(myGalleryPageVC, animated: true, completion: nil)
             
             
         case 3:
