@@ -22,7 +22,8 @@ class MyGalleryPageViewController: UIViewController {
     //MARK: - 프로퍼티
     let profileImage = UIImage(named: "menuIcon")
     var tabIndex: TabIndex = .first
-    
+    var images: [UIImage] = []
+
     
     //MARK: - UI 요소
     
@@ -210,9 +211,12 @@ class MyGalleryPageViewController: UIViewController {
         self.navigationItem.title = "nabaecamp"
         let menuButton = UIBarButtonItem(image: UIImage(named: "menuIcon"), style: .plain, target: self, action: #selector(menuButtonTapped))
         menuButton.tintColor = .black
-        self.navigationItem.rightBarButtonItem = menuButton
+        
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addButtonTapped))
+        addButton.tintColor = .black
+
+        self.navigationItem.rightBarButtonItems = [addButton, menuButton]
     }
-    
     
     func changeActiveTab(to newTab: TabIndex) {
         self.tabIndex = newTab
@@ -220,6 +224,13 @@ class MyGalleryPageViewController: UIViewController {
         
     }
     
+    
+    @objc func addButtonTapped() {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.sourceType = .photoLibrary
+        self.present(picker, animated: true, completion: nil)
+    }
     
     @objc func menuButtonTapped() {
         print("Menu button tapped")
@@ -437,3 +448,16 @@ extension MyGalleryPageViewController: CustomTabBarDelegate {
     }
 }
 
+extension MyGalleryPageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[.originalImage] as? UIImage {
+            images.append(image)
+            collectionView.reloadData()
+        }
+        picker.dismiss(animated: true, completion: nil)
+    }
+
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+}
