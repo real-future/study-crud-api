@@ -22,6 +22,7 @@ class MyGalleryPageViewController: UIViewController {
     //MARK: - 프로퍼티
     let profileImage = UIImage(named: "profileImage")
     var tabIndex: TabIndex = .first
+    var images: [UIImage] = []
     
     
     //MARK: - UI 요소
@@ -185,6 +186,7 @@ class MyGalleryPageViewController: UIViewController {
     }()
     
     
+    
     func createLabelStack(number: String, text: String) -> UIStackView {
         let numberLabel = UILabel()
         numberLabel.text = number
@@ -253,6 +255,13 @@ class MyGalleryPageViewController: UIViewController {
         setupGestureForProfileImageView()
         setupAutoLayout()
         
+    }
+    
+    func presentImagePickerController() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .photoLibrary
+        present(imagePickerController, animated: true, completion: nil)
     }
     
     func setupGestureForProfileImageView() {
@@ -398,7 +407,7 @@ extension MyGalleryPageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch tabIndex {
         case .first:
-            return 12
+            return images.count + 1
         case .second:
             return 3
         case .third:
@@ -408,17 +417,36 @@ extension MyGalleryPageViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        switch tabIndex {
-        case .first:
+        
+        if tabIndex == .first {
+            if indexPath.item == images.count { // "+" 아이콘을 위한 셀
+                cell.backgroundColor = .lightGray.withAlphaComponent(0.5)
+                
+                let imageView = UIImageView(image: UIImage(named: "plusIcon"))
+                imageView.contentMode = .scaleAspectFill
+                imageView.clipsToBounds = true
+                imageView.alpha = 0.5
+                cell.contentView.addSubview(imageView)
+                imageView.frame = cell.bounds
+                
+            } else {
+                cell.backgroundColor = .clear
+                let imageView = UIImageView(image: images[indexPath.item])
+                imageView.contentMode = .scaleAspectFill
+                imageView.clipsToBounds = true
+                cell.contentView.addSubview(imageView)
+                imageView.frame = cell.bounds
+            }
+        } else {
             cell.backgroundColor = .green
-        case .second:
-            cell.backgroundColor = .red
-        case .third:
-            cell.backgroundColor = .yellow
+            for subview in cell.contentView.subviews {
+                subview.removeFromSuperview()
+            }
         }
         return cell
     }
 }
+
 
 
 // MARK: - Extension : UICollectionViewDataSource
@@ -433,7 +461,9 @@ extension MyGalleryPageViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - Extension : UICollectionViewDelegate
 extension MyGalleryPageViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if tabIndex == .first && indexPath.item == 1 {
+        if tabIndex == .first && indexPath.item == images.count { // "+" 아이콘을 클릭할 때
+            presentImagePickerController()
+        } else if tabIndex == .first && indexPath.item == 1 {
             changeActiveTab(to: .second)
         } else if tabIndex == .first && indexPath.item == 2 {
             changeActiveTab(to: .third)
@@ -449,4 +479,19 @@ extension MyGalleryPageViewController: CustomTabBarDelegate {
     }
 }
 
+
+extension MyGalleryPageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            images.append(selectedImage)
+            collectionView.reloadData()
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+}
 
