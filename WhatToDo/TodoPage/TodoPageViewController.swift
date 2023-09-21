@@ -12,15 +12,19 @@ import CoreData
 class TodoPageViewController: UIViewController {
     
     // MARK: - Properties
-    private var tableView: UITableView!
     
+    private let todoDataManager = CoreDataManager.shared
+    private var todos = [TodoData]()
     
-    //CoreDataManager 인스턴스
-    let todoDataManager = CoreDataManager.shared
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.dataSource = self
+        tableView.delegate = self
+        tableView.register(TodoTableViewCell.self, forCellReuseIdentifier: "TodoTableViewCell")
+        return tableView
+    }()
     
-    var todos = [TodoData]()
-    
-    let floatingButton: UIButton = {
+    private lazy var floatingButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.backgroundColor = .skyBlue
         button.layer.cornerRadius = 25
@@ -39,61 +43,46 @@ class TodoPageViewController: UIViewController {
         fetchDataAndReloadTableView()
     }
     
-    override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
-        tableView.setEditing(editing, animated: animated)
-
-        print("Is editing: \(editing)")
-
-    }
-
-
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupTableView()
         setupUI()
     }
     
+    
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        tableView.setEditing(editing, animated: animated)
+    }
+    
+    
     // MARK: - Setup
     private func setupUI() {
-        setNavigationBar()
         view.backgroundColor = .white
         
+        setNavigationBar()
+        setupConstraints()
+    }
+    
+    private func setupConstraints() {
         view.addSubview(tableView)
-        
         tableView.snp.makeConstraints { (make) in
             make.edges.equalToSuperview()
         }
         
         view.addSubview(floatingButton)
-            
-            floatingButton.snp.makeConstraints { make in
-                make.width.height.equalTo(50)
-                make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-30)
-                make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-30)
-            }
+        floatingButton.snp.makeConstraints { make in
+            make.width.height.equalTo(50)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-30)
+            make.trailing.equalTo(view.safeAreaLayoutGuide).offset(-30)
+        }
     }
+    
     
     private func setNavigationBar() {
         navigationItem.rightBarButtonItem = editButtonItem
-
     }
     
-    private func setupTableView() {
-        tableView = UITableView()
-        tableView.dataSource = self
-        tableView.delegate = self
-        
-        // 셀 등록
-        tableView.register(TodoTableViewCell.self, forCellReuseIdentifier: "TodoTableViewCell")
-        
-    }
-    
-    
-        
     
     @objc func addButtonTapped() {
         let addAlert = UIAlertController(title: "Add a Task", message: "28자 이내로 입력해주세요", preferredStyle: .alert)
@@ -120,6 +109,7 @@ class TodoPageViewController: UIViewController {
         // 알림 창 표시
         self.present(addAlert, animated: true)
     }
+    
     
     // 새로운 태스크를 추가하는 메서드
     func addNewTask(title: String) {
@@ -259,7 +249,7 @@ extension TodoPageViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "TodoTableViewCell", for: indexPath) as! TodoTableViewCell
         print("Cell editing style: \(cell.editingStyle)")
-
+        
         let todo = todos[indexPath.row]
         cell.configure(isCompleted: todo.isCompleted, title: todo.title ?? "")
         
@@ -286,15 +276,10 @@ extension TodoPageViewController: UITableViewDelegate {
         return 70.0
     }
     
-    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        print("editingStyleForRowAt called")
-
-            return .delete
-        }
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         print("commit editingStyle called")
-
+        
         return true
     }
     
@@ -326,6 +311,8 @@ extension TodoPageViewController: UITableViewDelegate {
     }
 }
 
+
+// MARK: - UITextFieldDelegate
 extension TodoPageViewController: UITextFieldDelegate {
     // 텍스트 필드의 텍스트가 변경될 때 호출
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
@@ -356,7 +343,3 @@ extension TodoPageViewController: UITextFieldDelegate {
     }
     
 }
-
-
-
-
