@@ -289,6 +289,9 @@ class MyGalleryPageViewController: UIViewController {
     
     //MARK: - 오토레이아웃
     func setupAutoLayout() {
+        
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 85, right: 0)
+
         let postStack = createLabelStack(number: "7", text: "Post")
         let followerStack = createLabelStack(number: "0", text: "Follower")
         let followingStack = createLabelStack(number: "0", text: "Following")
@@ -409,7 +412,7 @@ extension MyGalleryPageViewController: UICollectionViewDataSource {
         case .first:
             return images.count + 1
         case .second:
-            return 3
+            return 12
         case .third:
             return 7
         }
@@ -417,31 +420,29 @@ extension MyGalleryPageViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        for subview in cell.contentView.subviews { // 모든 하위 뷰 제거
+            subview.removeFromSuperview()
+        }
         
         if tabIndex == .first {
-            if indexPath.item == images.count { // "+" 아이콘을 위한 셀
+            if indexPath.item == 0 {
                 cell.backgroundColor = .lightGray.withAlphaComponent(0.5)
-                
                 let imageView = UIImageView(image: UIImage(named: "plusIcon"))
                 imageView.contentMode = .scaleAspectFill
                 imageView.clipsToBounds = true
                 imageView.alpha = 0.5
                 cell.contentView.addSubview(imageView)
                 imageView.frame = cell.bounds
-                
             } else {
                 cell.backgroundColor = .clear
-                let imageView = UIImageView(image: images[indexPath.item])
+                let imageView = UIImageView(image: images[indexPath.item - 1])
                 imageView.contentMode = .scaleAspectFill
                 imageView.clipsToBounds = true
                 cell.contentView.addSubview(imageView)
                 imageView.frame = cell.bounds
             }
         } else {
-            cell.backgroundColor = .green
-            for subview in cell.contentView.subviews {
-                subview.removeFromSuperview()
-            }
+            cell.backgroundColor = .lightGray
         }
         return cell
     }
@@ -461,8 +462,9 @@ extension MyGalleryPageViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - Extension : UICollectionViewDelegate
 extension MyGalleryPageViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if tabIndex == .first && indexPath.item == images.count { // "+" 아이콘을 클릭할 때
+        if tabIndex == .first && indexPath.item == 0 { // "+" 아이콘을 클릭할 때
             presentImagePickerController()
+        
         } else if tabIndex == .first && indexPath.item == 1 {
             changeActiveTab(to: .second)
         } else if tabIndex == .first && indexPath.item == 2 {
@@ -484,7 +486,7 @@ extension MyGalleryPageViewController: UIImagePickerControllerDelegate, UINaviga
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            images.append(selectedImage)
+            images.insert(selectedImage, at: 0) // 이미지를 배열의 시작 부분에 추가
             collectionView.reloadData()
         }
         dismiss(animated: true, completion: nil)
