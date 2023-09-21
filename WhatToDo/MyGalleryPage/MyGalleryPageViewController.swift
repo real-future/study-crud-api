@@ -286,7 +286,6 @@ class MyGalleryPageViewController: UIViewController {
     }
     
     
-    
     //MARK: - 오토레이아웃
     func setupAutoLayout() {
         

@@ -12,6 +12,4 @@ extension UIColor {
     class var urlBlue: UIColor? { return UIColor(named: "urlBlue") }
     class var lightGrey: UIColor? { return UIColor(named: "lightGrey") }
     class var moreLightGrey: UIColor? { return UIColor(named: "moreLightGrey") }
-
 }
-

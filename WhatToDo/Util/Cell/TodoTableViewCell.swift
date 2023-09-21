@@ -10,10 +10,7 @@ import UIKit
 protocol TodoTableViewCellDelegate: AnyObject {
     func checkButtonTapped(in cell: TodoTableViewCell)
     func contentAreaTapped(in cell: TodoTableViewCell)
-
 }
-
-
 
 class TodoTableViewCell: UITableViewCell {
     
@@ -21,7 +18,7 @@ class TodoTableViewCell: UITableViewCell {
     let checkButton: UIButton = {
         let button = UIButton()
         let circleImage = UIImage(systemName: "circle")
-        button.setImage(circleImage, for: .normal) 
+        button.setImage(circleImage, for: .normal)
         button.tintColor = .darkGray
         return button
     }()
@@ -42,65 +39,39 @@ class TodoTableViewCell: UITableViewCell {
     let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 5 // titleLabel과 dateLabel 사이의 간격 조정
+        stackView.spacing = 5
         return stackView
     }()
     
-    
     weak var delegate: TodoTableViewCellDelegate?
-    
     
     // MARK: - Initialization
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupUI()
         setupActions()
-        
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        print("SubViews: \(self.subviews)")
     }
 
-    override var editingStyle: UITableViewCell.EditingStyle {
-            return .delete
-        }
-    
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     // MARK: - UI Setup
     private func setupUI() {
-        //🔴방법1
-//        self.contentView.bringSubviewToFront(checkButton)
-        
-        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(contentAreaTapped))
-                stackView.addGestureRecognizer(tapGesture)
-                stackView.isUserInteractionEnabled = true
+        stackView.addGestureRecognizer(tapGesture)
+        stackView.isUserInteractionEnabled = true
         
         stackView.addArrangedSubview(titleLabel)
         stackView.addArrangedSubview(dateLabel)
         
-        addSubview(stackView)
-        addSubview(checkButton)
-        
-//        //🔴 방법 2
-                contentView.addSubview(stackView)
-                contentView.addSubview(checkButton)
-        
-        
-        
+        contentView.addSubview(stackView)
+        contentView.addSubview(checkButton)
         
         stackView.snp.makeConstraints { (make) in
             make.left.equalTo(checkButton.snp.right).offset(16)
             make.centerY.equalTo(checkButton)
             make.right.equalToSuperview().offset(-16)
-            
         }
         
         checkButton.snp.makeConstraints { (make) in
@@ -108,8 +79,6 @@ class TodoTableViewCell: UITableViewCell {
             make.centerY.equalToSuperview()
             make.width.height.equalTo(25)
         }
-        
-        
     }
     
     // MARK: - UI Actions
@@ -117,23 +86,17 @@ class TodoTableViewCell: UITableViewCell {
         checkButton.addTarget(self, action: #selector(checkButtonTapped), for: .touchUpInside)
     }
     
-    
     @objc private func checkButtonTapped() {
-        print("Button was tapped. Checking if delegate method is called next.")
-        
-        var isCompleted = false
-
-        isCompleted.toggle()
-
-        titleLabel.textColor = isCompleted ? .lightGray : .darkGray
-        
+        let isCompleted = titleLabel.textColor == .lightGray
+        titleLabel.textColor = isCompleted ? .darkGray : .lightGray
         delegate?.checkButtonTapped(in: self)
     }
     
     @objc private func contentAreaTapped() {
-            delegate?.contentAreaTapped(in: self)
-        }
+        delegate?.contentAreaTapped(in: self)
+    }
     
+    // MARK: - Configuration
     func updateCheckButtonImage(isCompleted: Bool) {
         let imageName = isCompleted ? "checkmark.circle.fill" : "circle"
         let checkImage = UIImage(systemName: imageName)
@@ -141,10 +104,10 @@ class TodoTableViewCell: UITableViewCell {
     }
     
     func configure(isCompleted: Bool, title: String) {
-          titleLabel.text = title
-          titleLabel.textColor = isCompleted ? .lightGray : .darkGray
-          updateCheckButtonImage(isCompleted: isCompleted)
-      }
+        titleLabel.text = title
+        titleLabel.textColor = isCompleted ? .lightGray : .darkGray
+        updateCheckButtonImage(isCompleted: isCompleted)
+    }
     
     func updateDateLabel(createDate: Date, modifyDate: Date?) {
         let dateFormatter = DateFormatter()
@@ -157,5 +120,4 @@ class TodoTableViewCell: UITableViewCell {
         
         dateLabel.text = dateString
     }
-
 }
