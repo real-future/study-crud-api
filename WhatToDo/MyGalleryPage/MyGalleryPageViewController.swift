@@ -270,7 +270,7 @@ class MyGalleryPageViewController: UIViewController {
     
     
     @objc func profileImageViewTapped() {
-        let profileModel = ProfileModel(userName: "르탄이", userAge: 26)
+        let profileModel = ProfileModel(userName: "르탄이", userAge: 26, description: "iOS Developer🍎")
         let profileViewModel = ProfileViewModel(profile: profileModel)
         
         let profileViewController = ProfileViewController()
@@ -397,7 +397,7 @@ extension MyGalleryPageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch tabIndex {
         case .first:
-            return 9
+            return 12
         case .second:
             return 3
         case .third:
