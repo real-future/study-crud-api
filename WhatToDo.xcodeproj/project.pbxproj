@@ -14,7 +14,6 @@
 		D856CAC42AB9F3B40082505F /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D856CAC32AB9F3B40082505F /* ProfileViewModel.swift */; };
 		D856CAC62AB9F3CE0082505F /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D856CAC52AB9F3CE0082505F /* ProfileViewController.swift */; };
 		D86702392AB414D300B390F0 /* CustomBottomTabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86702382AB414D300B390F0 /* CustomBottomTabBar.swift */; };
-		D867023C2AB4256C00B390F0 /* MyGalleryPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D867023B2AB4256C00B390F0 /* MyGalleryPageView.swift */; };
 		D867023F2AB440FC00B390F0 /* TodoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D867023E2AB440FC00B390F0 /* TodoTableViewCell.swift */; };
 		D86702422AB441CC00B390F0 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86702412AB441CC00B390F0 /* CoreDataManager.swift */; };
 		D86702442AB444FB00B390F0 /* TodoPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D86702432AB444FB00B390F0 /* TodoPageViewController.swift */; };
@@ -63,7 +62,6 @@
 		D856CAC32AB9F3B40082505F /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		D856CAC52AB9F3CE0082505F /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D86702382AB414D300B390F0 /* CustomBottomTabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBottomTabBar.swift; sourceTree = "<group>"; };
-		D867023B2AB4256C00B390F0 /* MyGalleryPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGalleryPageView.swift; sourceTree = "<group>"; };
 		D867023E2AB440FC00B390F0 /* TodoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoTableViewCell.swift; sourceTree = "<group>"; };
 		D86702412AB441CC00B390F0 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		D86702432AB444FB00B390F0 /* TodoPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoPageViewController.swift; sourceTree = "<group>"; };
@@ -251,7 +249,6 @@
 				D8A6B22C2AB34BA000E66BBE /* CustomTabBar.swift */,
 				D86702382AB414D300B390F0 /* CustomBottomTabBar.swift */,
 				D8C7874E2AB2985900ED145C /* MyGalleryPageViewController.swift */,
-				D867023B2AB4256C00B390F0 /* MyGalleryPageView.swift */,
 			);
 			path = MyGalleryPage;
 			sourceTree = "<group>";
@@ -425,7 +422,6 @@
 				D86702442AB444FB00B390F0 /* TodoPageViewController.swift in Sources */,
 				D856CAC22AB9F38C0082505F /* ProfileModel.swift in Sources */,
 				D8FDA73B2AB1FDB3002864DF /* AppDelegate.swift in Sources */,
-				D867023C2AB4256C00B390F0 /* MyGalleryPageView.swift in Sources */,
 				D8767B262ABA870D00683264 /* CatViewController.swift in Sources */,
 				D8FDA73D2AB1FDB3002864DF /* SceneDelegate.swift in Sources */,
 				D856CAB92AB9CCC40082505F /* TodoData+CoreDataClass.swift in Sources */,

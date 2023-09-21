@@ -18,6 +18,10 @@ class ProfileViewModel {
         return "\(profile.userAge) 세"
     }
     
+    var description: String {
+        return profile.description
+    }
+    
     init(profile: ProfileModel) {
         self.profile = profile
     }
