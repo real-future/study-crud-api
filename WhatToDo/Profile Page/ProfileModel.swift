@@ -10,4 +10,5 @@ import Foundation
 struct ProfileModel {
     var userName: String
     var userAge: Int
+    var description: String
 }
