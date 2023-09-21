@@ -20,8 +20,9 @@ class MyGalleryPageViewController: UIViewController {
     
     
     //MARK: - 프로퍼티
-    let profileImage = UIImage(named: "menuIcon")
+    let profileImage = UIImage(named: "profileImage")
     var tabIndex: TabIndex = .first
+    var images: [UIImage] = []
     
     
     //MARK: - UI 요소
@@ -47,6 +48,13 @@ class MyGalleryPageViewController: UIViewController {
         return button
     }()
     
+    let menuButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "menuIcon"), for: .normal)
+        button.tintColor = .black
+        button.addTarget(self, action: #selector(menuButtonTapped), for: .touchUpInside)
+        return button
+    }()
     
     let profileImageView: UIImageView = {
         let imageView = UIImageView()
@@ -178,6 +186,7 @@ class MyGalleryPageViewController: UIViewController {
     }()
     
     
+    
     func createLabelStack(number: String, text: String) -> UIStackView {
         let numberLabel = UILabel()
         numberLabel.text = number
@@ -206,12 +215,9 @@ class MyGalleryPageViewController: UIViewController {
     }
     
     
-    func setupNavigationBar() {
-        self.navigationItem.title = "nabaecamp"
-        let menuButton = UIBarButtonItem(image: UIImage(named: "menuIcon"), style: .plain, target: self, action: #selector(menuButtonTapped))
-        menuButton.tintColor = .black
-        self.navigationItem.rightBarButtonItem = menuButton
-    }
+    
+    
+    
     
     
     func changeActiveTab(to newTab: TabIndex) {
@@ -219,6 +225,7 @@ class MyGalleryPageViewController: UIViewController {
         self.collectionView.reloadData()
         
     }
+    
     
     
     @objc func menuButtonTapped() {
@@ -246,9 +253,15 @@ class MyGalleryPageViewController: UIViewController {
     func setupUI() {
         self.view.backgroundColor = .white
         setupGestureForProfileImageView()
-        setupNavigationBar()
         setupAutoLayout()
         
+    }
+    
+    func presentImagePickerController() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .photoLibrary
+        present(imagePickerController, animated: true, completion: nil)
     }
     
     func setupGestureForProfileImageView() {
@@ -298,6 +311,7 @@ class MyGalleryPageViewController: UIViewController {
         view.addSubview(customNavigationBar)
         customNavigationBar.addSubview(titleLabel)
         customNavigationBar.addSubview(closeButton)
+        customNavigationBar.addSubview(menuButton)
         
         customNavigationBar.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
@@ -313,71 +327,78 @@ class MyGalleryPageViewController: UIViewController {
         closeButton.snp.makeConstraints { make in
             make.left.equalTo(customNavigationBar.snp.left).offset(16)
             make.centerY.equalTo(customNavigationBar)
+            
+        }
         
+        
+        menuButton.snp.makeConstraints { make in
+            make.right.equalTo(customNavigationBar.snp.right).offset(-16)
+            make.centerY.equalTo(customNavigationBar)
+            make.size.equalTo(CGSize(width: 24, height: 24))
+        }
+        
+        profileImageView.snp.makeConstraints { (make) in
+            make.left.equalTo(view.snp.left).offset(14)
+            make.top.equalTo(titleLabel.snp.bottom).offset(14)
+            make.width.height.equalTo(100)
+        }
+        
+        labelsStack.snp.makeConstraints { (make) in
+            make.right.equalToSuperview().offset(-28)
+            make.centerY.equalTo(profileImageView)
+        }
+        
+        infoStackView.snp.makeConstraints { (make) in
+            make.top.equalTo(profileImageView.snp.bottom).offset(14)
+            make.left.equalTo(profileImageView)
+            make.right.lessThanOrEqualTo(labelsStack)
+        }
+        
+        followMessageStackView.snp.makeConstraints { make in
+            make.height.equalTo(30)
+            make.top.equalTo(infoStackView.snp.bottom).offset(14)
+            make.left.equalTo(profileImageView)
+            make.right.lessThanOrEqualTo(moreButton.snp.left).offset(-8)
+        }
+        
+        moreButton.snp.makeConstraints { make in
+            make.left.equalTo(followMessageStackView.snp.right).offset(8)
+            make.right.equalTo(view.snp.right).offset(-14)
+            make.width.height.equalTo(30)
+            make.centerY.equalTo(followMessageStackView)
+        }
+        
+        followButton.snp.makeConstraints { make in
+            make.width.equalTo(followMessageStackView.snp.width).multipliedBy(0.5).offset(-4)
+        }
+        
+        messageButton.snp.makeConstraints { make in
+            make.width.equalTo(followMessageStackView.snp.width).multipliedBy(0.5).offset(-4)
+        }
+        
+        dividerView.snp.makeConstraints { make in
+            make.top.equalTo(followMessageStackView.snp.bottom).offset(10)
+            make.left.equalTo(profileImageView)
+            make.right.equalTo(moreButton.snp.right)
+            make.height.equalTo(1)
+        }
+        
+        customTabBar.snp.makeConstraints { make in
+            make.left.right.equalTo(view)
+            make.height.equalTo(35)
+            make.top.equalTo(dividerView.snp.bottom).offset(2)
+        }
+        
+        collectionView.snp.makeConstraints { make in
+            make.left.right.bottom.equalTo(view)
+            make.top.equalTo(customTabBar.snp.bottom)
+        }
+        
+        customBottomTabBar.snp.makeConstraints { make in
+            make.left.right.bottom.equalTo(view)
+            make.height.equalTo(85)
+        }
     }
-    
-    profileImageView.snp.makeConstraints { (make) in
-        make.left.equalTo(view.snp.left).offset(14)
-        make.top.equalTo(titleLabel.snp.bottom).offset(14)
-        make.width.height.equalTo(100)
-    }
-    
-    labelsStack.snp.makeConstraints { (make) in
-        make.right.equalToSuperview().offset(-28)
-        make.centerY.equalTo(profileImageView)
-    }
-    
-    infoStackView.snp.makeConstraints { (make) in
-        make.top.equalTo(profileImageView.snp.bottom).offset(14)
-        make.left.equalTo(profileImageView)
-        make.right.lessThanOrEqualTo(labelsStack)
-    }
-    
-    followMessageStackView.snp.makeConstraints { make in
-        make.height.equalTo(30)
-        make.top.equalTo(infoStackView.snp.bottom).offset(14)
-        make.left.equalTo(profileImageView)
-        make.right.lessThanOrEqualTo(moreButton.snp.left).offset(-8)
-    }
-    
-    moreButton.snp.makeConstraints { make in
-        make.left.equalTo(followMessageStackView.snp.right).offset(8)
-        make.right.equalTo(view.snp.right).offset(-14)
-        make.width.height.equalTo(30)
-        make.centerY.equalTo(followMessageStackView)
-    }
-    
-    followButton.snp.makeConstraints { make in
-        make.width.equalTo(followMessageStackView.snp.width).multipliedBy(0.5).offset(-4)
-    }
-    
-    messageButton.snp.makeConstraints { make in
-        make.width.equalTo(followMessageStackView.snp.width).multipliedBy(0.5).offset(-4)
-    }
-    
-    dividerView.snp.makeConstraints { make in
-        make.top.equalTo(followMessageStackView.snp.bottom).offset(10)
-        make.left.equalTo(profileImageView)
-        make.right.equalTo(moreButton.snp.right)
-        make.height.equalTo(1)
-    }
-    
-    customTabBar.snp.makeConstraints { make in
-        make.left.right.equalTo(view)
-        make.height.equalTo(35)
-        make.top.equalTo(dividerView.snp.bottom).offset(2)
-    }
-    
-    collectionView.snp.makeConstraints { make in
-        make.left.right.bottom.equalTo(view)
-        make.top.equalTo(customTabBar.snp.bottom)
-    }
-    
-    customBottomTabBar.snp.makeConstraints { make in
-        make.left.right.bottom.equalTo(view)
-        make.height.equalTo(85)
-    }
-}
 }
 
 
@@ -386,7 +407,7 @@ extension MyGalleryPageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch tabIndex {
         case .first:
-            return 12
+            return images.count + 1
         case .second:
             return 3
         case .third:
@@ -396,17 +417,36 @@ extension MyGalleryPageViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        switch tabIndex {
-        case .first:
+        
+        if tabIndex == .first {
+            if indexPath.item == images.count { // "+" 아이콘을 위한 셀
+                cell.backgroundColor = .lightGray.withAlphaComponent(0.5)
+                
+                let imageView = UIImageView(image: UIImage(named: "plusIcon"))
+                imageView.contentMode = .scaleAspectFill
+                imageView.clipsToBounds = true
+                imageView.alpha = 0.5
+                cell.contentView.addSubview(imageView)
+                imageView.frame = cell.bounds
+                
+            } else {
+                cell.backgroundColor = .clear
+                let imageView = UIImageView(image: images[indexPath.item])
+                imageView.contentMode = .scaleAspectFill
+                imageView.clipsToBounds = true
+                cell.contentView.addSubview(imageView)
+                imageView.frame = cell.bounds
+            }
+        } else {
             cell.backgroundColor = .green
-        case .second:
-            cell.backgroundColor = .red
-        case .third:
-            cell.backgroundColor = .yellow
+            for subview in cell.contentView.subviews {
+                subview.removeFromSuperview()
+            }
         }
         return cell
     }
 }
+
 
 
 // MARK: - Extension : UICollectionViewDataSource
@@ -421,7 +461,9 @@ extension MyGalleryPageViewController: UICollectionViewDelegateFlowLayout {
 // MARK: - Extension : UICollectionViewDelegate
 extension MyGalleryPageViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if tabIndex == .first && indexPath.item == 1 {
+        if tabIndex == .first && indexPath.item == images.count { // "+" 아이콘을 클릭할 때
+            presentImagePickerController()
+        } else if tabIndex == .first && indexPath.item == 1 {
             changeActiveTab(to: .second)
         } else if tabIndex == .first && indexPath.item == 2 {
             changeActiveTab(to: .third)
@@ -434,6 +476,22 @@ extension MyGalleryPageViewController: UICollectionViewDelegate {
 extension MyGalleryPageViewController: CustomTabBarDelegate {
     func didSelectTab(at index: TabIndex) {
         changeActiveTab(to: index)
+    }
+}
+
+
+extension MyGalleryPageViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            images.append(selectedImage)
+            collectionView.reloadData()
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }
 
