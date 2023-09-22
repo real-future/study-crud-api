@@ -18,7 +18,7 @@ class CustomTabBar: UIView {
     // MARK: - Properties
     var sliderLeadingConstraint: Constraint?
     weak var delegate: CustomTabBarDelegate?
-
+    
     
     // MARK: - UI Components
     private let gridIcon: UIImageView = {
@@ -65,78 +65,78 @@ class CustomTabBar: UIView {
     
     // MARK: - UI Setup
     private func setupView() {
-            self.backgroundColor = .white
-            setupIcons()
-            setupConstraints()
-        }
+        self.backgroundColor = .white
+        setupIcons()
+        setupConstraints()
+    }
     
-        
-        private func setupIcons() {
-            [gridIcon, videoIcon, tagIcon].forEach { icon in
-                let tap = UITapGestureRecognizer(target: self, action: #selector(handleIconTap(_:)))
-                icon.addGestureRecognizer(tap)
-                icon.isUserInteractionEnabled = true
-            }
-        }
-
     
-        private func setupConstraints() {
-            self.snp.makeConstraints { make in
-                make.height.equalTo(35)
-            }
-            
-            let stackView = UIStackView(arrangedSubviews: [gridIcon, videoIcon, tagIcon])
-            stackView.axis = .horizontal
-            stackView.distribution = .fillEqually
-            stackView.alignment = .center
-
-            addSubview(stackView)
-            addSubview(sliderView)
-
-            stackView.snp.makeConstraints { make in
-                make.edges.equalToSuperview()
-            }
-
-            [gridIcon, videoIcon, tagIcon].forEach { icon in
-                icon.snp.makeConstraints { make in
-                    make.height.equalTo(22.5)
-                }
-            }
-
-            sliderView.snp.makeConstraints { make in
-                make.height.equalTo(1)
-                make.width.equalTo(self.snp.width).dividedBy(3)
-                make.bottom.equalTo(self)
-                self.sliderLeadingConstraint = make.left.equalTo(self).constraint
-            }
-        }
-
-    
-        // MARK: - Actions
-        @objc private func handleIconTap(_ gesture: UITapGestureRecognizer) {
-            guard let view = gesture.view else { return }
-            let tabIndex: TabIndex
-            let targetX: CGFloat
-
-            switch view {
-            case gridIcon:
-                tabIndex = .first
-                targetX = 0
-            case videoIcon:
-                tabIndex = .second
-                targetX = self.bounds.width / 3
-            case tagIcon:
-                tabIndex = .third
-                targetX = (self.bounds.width / 3) * 2
-            default:
-                return
-            }
-
-            delegate?.didSelectTab(at: tabIndex)
-
-            sliderLeadingConstraint?.update(offset: targetX)
-            UIView.animate(withDuration: 0.3) {
-                self.layoutIfNeeded()
-            }
+    private func setupIcons() {
+        [gridIcon, videoIcon, tagIcon].forEach { icon in
+            let tap = UITapGestureRecognizer(target: self, action: #selector(handleIconTap(_:)))
+            icon.addGestureRecognizer(tap)
+            icon.isUserInteractionEnabled = true
         }
     }
+    
+    
+    private func setupConstraints() {
+        self.snp.makeConstraints { make in
+            make.height.equalTo(35)
+        }
+        
+        let stackView = UIStackView(arrangedSubviews: [gridIcon, videoIcon, tagIcon])
+        stackView.axis = .horizontal
+        stackView.distribution = .fillEqually
+        stackView.alignment = .center
+        
+        addSubview(stackView)
+        addSubview(sliderView)
+        
+        stackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
+        }
+        
+        [gridIcon, videoIcon, tagIcon].forEach { icon in
+            icon.snp.makeConstraints { make in
+                make.height.equalTo(22.5)
+            }
+        }
+        
+        sliderView.snp.makeConstraints { make in
+            make.height.equalTo(1)
+            make.width.equalTo(self.snp.width).dividedBy(3)
+            make.bottom.equalTo(self)
+            self.sliderLeadingConstraint = make.left.equalTo(self).constraint
+        }
+    }
+    
+    
+    // MARK: - Actions
+    @objc private func handleIconTap(_ gesture: UITapGestureRecognizer) {
+        guard let view = gesture.view else { return }
+        let tabIndex: TabIndex
+        let targetX: CGFloat
+        
+        switch view {
+        case gridIcon:
+            tabIndex = .first
+            targetX = 0
+        case videoIcon:
+            tabIndex = .second
+            targetX = self.bounds.width / 3
+        case tagIcon:
+            tabIndex = .third
+            targetX = (self.bounds.width / 3) * 2
+        default:
+            return
+        }
+        
+        delegate?.didSelectTab(at: tabIndex)
+        
+        sliderLeadingConstraint?.update(offset: targetX)
+        UIView.animate(withDuration: 0.3) {
+            self.layoutIfNeeded()
+        }
+    }
+}
