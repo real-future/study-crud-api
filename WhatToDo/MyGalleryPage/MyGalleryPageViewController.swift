@@ -15,32 +15,34 @@ enum TabIndex {
     case third
 }
 
-//MARK: - MyGalleryPageViewController
+
 class MyGalleryPageViewController: UIViewController {
     
     
-    //MARK: - 프로퍼티
+    // MARK: - Properties
     let profileImage = UIImage(named: "profileImage")
     var tabIndex: TabIndex = .first
     var images: [UIImage] = []
     
     
-    //MARK: - UI 요소
-    
-    let customNavigationBar: UIView = {
+    // MARK: - UI Components
+    // MARK: - UI Components_Navigation Bar
+    private let customNavigationBar: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         return view
     }()
     
-    let titleLabel: UILabel = {
+    
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "nabaecamp"
         label.font = UIFont.boldSystemFont(ofSize: 18)
         return label
     }()
     
-    let closeButton: UIButton = {
+    
+    private let closeButton: UIButton = {
         let button = UIButton()
         button.setTitle("Back", for: .normal)
         button.setTitleColor(.skyBlue, for: .normal)
@@ -48,7 +50,8 @@ class MyGalleryPageViewController: UIViewController {
         return button
     }()
     
-    let menuButton: UIButton = {
+    
+    private let menuButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(named: "menuIcon"), for: .normal)
         button.tintColor = .black
@@ -56,7 +59,9 @@ class MyGalleryPageViewController: UIViewController {
         return button
     }()
     
-    let profileImageView: UIImageView = {
+    
+    // MARK: - UI Components_Profile
+    private let profileImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "profileImage")
         imageView.contentMode = .scaleAspectFill
@@ -65,113 +70,8 @@ class MyGalleryPageViewController: UIViewController {
         return imageView
     }()
     
-    let nameLabel: UILabel = {
-        let label = UILabel()
-        label.text = "르탄이"
-        label.font = UIFont(name: "OpenSans-Bold", size: 14)
-        label.numberOfLines = 1
-        return label
-    }()
     
-    let descriptionLabel: UILabel = {
-        let label = UILabel()
-        label.text = "iOS Developer🍎"
-        label.font = UIFont(name: "OpenSans-Regular", size: 14)
-        label.numberOfLines = 3
-        return label
-    }()
-    
-    let websiteLabel: UILabel = {
-        let label = UILabel()
-        label.text = "spartacodingclub.kr"
-        label.font = UIFont(name: "OpenSans-Regular", size: 14)
-        label.textColor = .urlBlue
-        label.numberOfLines = 1
-        label.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: MyGalleryPageViewController.self, action: #selector(openWebsite))
-        label.addGestureRecognizer(tap)
-        return label
-    }()
-    
-    lazy var infoStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [nameLabel, descriptionLabel, websiteLabel])
-        stackView.axis = .vertical
-        stackView.spacing = 0
-        return stackView
-    }()
-    
-    
-    let followButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Follow", for: .normal)
-        button.titleLabel?.font = UIFont(name: "OpenSans-Bold", size: 14)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .skyBlue
-        button.layer.cornerRadius = 4
-        return button
-    }()
-    
-    let messageButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Message", for: .normal)
-        button.titleLabel?.font = UIFont(name: "OpenSans-Bold", size: 14)
-        button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 4
-        button.layer.borderWidth = 1.5
-        button.layer.borderColor = UIColor.lightGrey?.cgColor
-        return button
-    }()
-    
-    let moreButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-        button.tintColor = .black
-        button.backgroundColor = .white
-        button.layer.cornerRadius = 4
-        button.layer.borderWidth = 1.5
-        button.layer.borderColor = UIColor.lightGrey?.cgColor
-        return button
-    }()
-    
-    
-    lazy var followMessageStackView: UIStackView = {
-        let stackView = UIStackView(arrangedSubviews: [followButton, messageButton])
-        stackView.axis = .horizontal
-        stackView.spacing = 8
-        return stackView
-    }()
-    
-    let dividerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .moreLightGrey
-        return view
-    }()
-    
-    let customTabBar: CustomTabBar = {
-        let tabBar = CustomTabBar()
-        return tabBar
-    }()
-    
-    lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.minimumInteritemSpacing = 2
-        layout.minimumLineSpacing = 2
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = .white
-        cv.delegate = self
-        cv.dataSource = self
-        cv.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        return cv
-    }()
-    
-    let customBottomTabBar: CustomBottomTabBar = {
-        let tabBar = CustomBottomTabBar()
-        return tabBar
-    }()
-    
-    lazy var labelsStack: UIStackView = {
+    private lazy var labelsStack: UIStackView = {
         let postStack = createLabelStack(number: "7", text: "Post")
         let followerStack = createLabelStack(number: "0", text: "Follower")
         let followingStack = createLabelStack(number: "0", text: "Following")
@@ -185,6 +85,126 @@ class MyGalleryPageViewController: UIViewController {
         return stack
     }()
     
+    
+    private let nameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "르탄이"
+        label.font = UIFont(name: "OpenSans-Bold", size: 14)
+        label.numberOfLines = 1
+        return label
+    }()
+    
+    
+    private let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.text = "iOS Developer🍎"
+        label.font = UIFont(name: "OpenSans-Regular", size: 14)
+        label.numberOfLines = 3
+        return label
+    }()
+    
+    
+    private let websiteLabel: UILabel = {
+        let label = UILabel()
+        label.text = "spartacodingclub.kr"
+        label.font = UIFont(name: "OpenSans-Regular", size: 14)
+        label.textColor = .urlBlue
+        label.numberOfLines = 1
+        label.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: MyGalleryPageViewController.self, action: #selector(openWebsite))
+        label.addGestureRecognizer(tap)
+        return label
+    }()
+    
+    
+    private lazy var infoStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [nameLabel, descriptionLabel, websiteLabel])
+        stackView.axis = .vertical
+        stackView.spacing = 0
+        return stackView
+    }()
+    
+    
+    // MARK: - UI Components_Follow & Message
+    private let followButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Follow", for: .normal)
+        button.titleLabel?.font = UIFont(name: "OpenSans-Bold", size: 14)
+        button.setTitleColor(.white, for: .normal)
+        button.backgroundColor = .skyBlue
+        button.layer.cornerRadius = 4
+        return button
+    }()
+    
+    
+    private let messageButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("Message", for: .normal)
+        button.titleLabel?.font = UIFont(name: "OpenSans-Bold", size: 14)
+        button.setTitleColor(.black, for: .normal)
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 4
+        button.layer.borderWidth = 1.5
+        button.layer.borderColor = UIColor.lightGrey?.cgColor
+        return button
+    }()
+    
+    
+    private let moreButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        button.tintColor = .black
+        button.backgroundColor = .white
+        button.layer.cornerRadius = 4
+        button.layer.borderWidth = 1.5
+        button.layer.borderColor = UIColor.lightGrey?.cgColor
+        return button
+    }()
+    
+    
+    private lazy var followMessageStackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [followButton, messageButton])
+        stackView.axis = .horizontal
+        stackView.spacing = 8
+        return stackView
+    }()
+    
+    
+    // MARK: - UI Components_dividerView
+    private let dividerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .moreLightGrey
+        return view
+    }()
+    
+    
+    // MARK: - UI Components_CustomBar
+    private let customTabBar: CustomTabBar = {
+        let tabBar = CustomTabBar()
+        return tabBar
+    }()
+    
+    
+    // MARK: - UI Components_collectionView
+    private lazy var collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.minimumInteritemSpacing = 2
+        layout.minimumLineSpacing = 2
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.backgroundColor = .white
+        cv.delegate = self
+        cv.dataSource = self
+        cv.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        return cv
+    }()
+    
+    
+    // MARK: - UI Components_customBottomTabBar
+    private let customBottomTabBar: CustomBottomTabBar = {
+        let tabBar = CustomBottomTabBar()
+        return tabBar
+    }()
     
     
     func createLabelStack(number: String, text: String) -> UIStackView {
@@ -215,19 +235,7 @@ class MyGalleryPageViewController: UIViewController {
     }
     
     
-    
-    
-    
-    
-    
-    func changeActiveTab(to newTab: TabIndex) {
-        self.tabIndex = newTab
-        self.collectionView.reloadData()
-        
-    }
-    
-    
-    
+    // MARK: - Actions
     @objc func menuButtonTapped() {
         print("Menu button tapped")
     }
@@ -237,6 +245,42 @@ class MyGalleryPageViewController: UIViewController {
         if let url = URL(string: "http://spartacodingclub.kr") {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         }
+    }
+    
+    
+    @objc func profileImageViewTapped() {
+        let profileModel = ProfileModel(userName: "르탄이", userAge: 26, description: "iOS Developer🍎")
+        let profileViewModel = ProfileViewModel(profile: profileModel)
+        let profileViewController = ProfileViewController()
+        profileViewController.viewModel = profileViewModel
+        profileViewController.modalPresentationStyle = .automatic
+        self.present(profileViewController, animated: true, completion: nil)
+    }
+    
+    
+    @objc func closeButtonTapped() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    
+    func presentImagePickerController() {
+        let imagePickerController = UIImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.sourceType = .photoLibrary
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    
+    func setupGestureForProfileImageView() {
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(profileImageViewTapped))
+        profileImageView.isUserInteractionEnabled = true
+        profileImageView.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    
+    func changeActiveTab(to newTab: TabIndex) {
+        self.tabIndex = newTab
+        self.collectionView.reloadData()
     }
     
     
@@ -253,44 +297,14 @@ class MyGalleryPageViewController: UIViewController {
     func setupUI() {
         self.view.backgroundColor = .white
         setupGestureForProfileImageView()
-        setupAutoLayout()
-        
-    }
-    
-    func presentImagePickerController() {
-        let imagePickerController = UIImagePickerController()
-        imagePickerController.delegate = self
-        imagePickerController.sourceType = .photoLibrary
-        present(imagePickerController, animated: true, completion: nil)
-    }
-    
-    func setupGestureForProfileImageView() {
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(profileImageViewTapped))
-        profileImageView.isUserInteractionEnabled = true
-        profileImageView.addGestureRecognizer(tapGestureRecognizer)
+        setupConstraints()
     }
     
     
-    @objc func profileImageViewTapped() {
-        let profileModel = ProfileModel(userName: "르탄이", userAge: 26, description: "iOS Developer🍎")
-        let profileViewModel = ProfileViewModel(profile: profileModel)
-        
-        let profileViewController = ProfileViewController()
-        profileViewController.viewModel = profileViewModel
-        profileViewController.modalPresentationStyle = .automatic
-        self.present(profileViewController, animated: true, completion: nil)
-    }
-    
-    @objc func closeButtonTapped() {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    
-    //MARK: - 오토레이아웃
-    func setupAutoLayout() {
+    func setupConstraints() {
         
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 85, right: 0)
-
+        
         let postStack = createLabelStack(number: "7", text: "Post")
         let followerStack = createLabelStack(number: "0", text: "Follower")
         let followingStack = createLabelStack(number: "0", text: "Following")
@@ -301,73 +315,58 @@ class MyGalleryPageViewController: UIViewController {
         labelsStack.distribution = .fillEqually
         labelsStack.spacing = 16
         
-        view.addSubview(profileImageView)
-        view.addSubview(labelsStack)
-        view.addSubview(infoStackView)
-        view.addSubview(followMessageStackView)
-        view.addSubview(moreButton)
-        view.addSubview(dividerView)
-        view.addSubview(customTabBar)
-        view.addSubview(collectionView)
-        view.addSubview(customBottomTabBar)
         view.addSubview(customNavigationBar)
-        customNavigationBar.addSubview(titleLabel)
-        customNavigationBar.addSubview(closeButton)
-        customNavigationBar.addSubview(menuButton)
-        
         customNavigationBar.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.left.right.equalTo(view)
             make.height.equalTo(44)  // 네비게이션 바 높이
         }
         
+        customNavigationBar.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalTo(customNavigationBar)
             make.centerY.equalTo(customNavigationBar)
         }
         
+        customNavigationBar.addSubview(closeButton)
         closeButton.snp.makeConstraints { make in
             make.left.equalTo(customNavigationBar.snp.left).offset(16)
             make.centerY.equalTo(customNavigationBar)
-            
         }
         
-        
+        customNavigationBar.addSubview(menuButton)
         menuButton.snp.makeConstraints { make in
             make.right.equalTo(customNavigationBar.snp.right).offset(-16)
             make.centerY.equalTo(customNavigationBar)
             make.size.equalTo(CGSize(width: 24, height: 24))
         }
         
+        view.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { (make) in
             make.left.equalTo(view.snp.left).offset(14)
             make.top.equalTo(titleLabel.snp.bottom).offset(14)
             make.width.height.equalTo(100)
         }
         
+        view.addSubview(labelsStack)
         labelsStack.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(-28)
             make.centerY.equalTo(profileImageView)
         }
         
+        view.addSubview(infoStackView)
         infoStackView.snp.makeConstraints { (make) in
             make.top.equalTo(profileImageView.snp.bottom).offset(14)
             make.left.equalTo(profileImageView)
             make.right.lessThanOrEqualTo(labelsStack)
         }
         
+        view.addSubview(followMessageStackView)
         followMessageStackView.snp.makeConstraints { make in
             make.height.equalTo(30)
             make.top.equalTo(infoStackView.snp.bottom).offset(14)
             make.left.equalTo(profileImageView)
             make.right.lessThanOrEqualTo(moreButton.snp.left).offset(-8)
-        }
-        
-        moreButton.snp.makeConstraints { make in
-            make.left.equalTo(followMessageStackView.snp.right).offset(8)
-            make.right.equalTo(view.snp.right).offset(-14)
-            make.width.height.equalTo(30)
-            make.centerY.equalTo(followMessageStackView)
         }
         
         followButton.snp.makeConstraints { make in
@@ -378,6 +377,15 @@ class MyGalleryPageViewController: UIViewController {
             make.width.equalTo(followMessageStackView.snp.width).multipliedBy(0.5).offset(-4)
         }
         
+        view.addSubview(moreButton)
+        moreButton.snp.makeConstraints { make in
+            make.left.equalTo(followMessageStackView.snp.right).offset(8)
+            make.right.equalTo(view.snp.right).offset(-14)
+            make.width.height.equalTo(30)
+            make.centerY.equalTo(followMessageStackView)
+        }
+        
+        view.addSubview(dividerView)
         dividerView.snp.makeConstraints { make in
             make.top.equalTo(followMessageStackView.snp.bottom).offset(10)
             make.left.equalTo(profileImageView)
@@ -385,17 +393,21 @@ class MyGalleryPageViewController: UIViewController {
             make.height.equalTo(1)
         }
         
+        view.addSubview(customTabBar)
         customTabBar.snp.makeConstraints { make in
             make.left.right.equalTo(view)
             make.height.equalTo(35)
             make.top.equalTo(dividerView.snp.bottom).offset(2)
         }
         
+        view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.left.right.bottom.equalTo(view)
             make.top.equalTo(customTabBar.snp.bottom)
         }
         
+        
+        view.addSubview(customBottomTabBar)
         customBottomTabBar.snp.makeConstraints { make in
             make.left.right.bottom.equalTo(view)
             make.height.equalTo(85)
@@ -448,7 +460,6 @@ extension MyGalleryPageViewController: UICollectionViewDataSource {
 }
 
 
-
 // MARK: - Extension : UICollectionViewDataSource
 extension MyGalleryPageViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -463,7 +474,7 @@ extension MyGalleryPageViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if tabIndex == .first && indexPath.item == 0 { // "+" 아이콘을 클릭할 때
             presentImagePickerController()
-        
+            
         } else if tabIndex == .first && indexPath.item == 1 {
             changeActiveTab(to: .second)
         } else if tabIndex == .first && indexPath.item == 2 {
@@ -490,6 +501,7 @@ extension MyGalleryPageViewController: UIImagePickerControllerDelegate, UINaviga
         }
         dismiss(animated: true, completion: nil)
     }
+    
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)

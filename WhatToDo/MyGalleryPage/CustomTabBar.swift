@@ -12,44 +12,49 @@ protocol CustomTabBarDelegate: AnyObject {
     func didSelectTab(at index: TabIndex)
 }
 
+
 class CustomTabBar: UIView {
+    
+    // MARK: - Properties
     var sliderLeadingConstraint: Constraint?
     weak var delegate: CustomTabBarDelegate?
-
     
-    //MARK: - 요소 
-    let gridIcon: UIImageView = {
+    
+    // MARK: - UI Components
+    private let gridIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "grid")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
-    let videoIcon: UIImageView = {
+    private let videoIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "videoIcon")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
-    let tagIcon: UIImageView = {
+    private let tagIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "tagIcon")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
-    let sliderView: UIView = {
+    private let sliderView: UIView = {
         let view = UIView()
         view.backgroundColor = .black
         return view
     }()
     
     
+    // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
     }
+    
     
     //나중에 스토리보드로 작업할 가능성이 있을 때 필요한 생성자
     required init?(coder: NSCoder) {
@@ -57,8 +62,25 @@ class CustomTabBar: UIView {
         setupView()
     }
     
-    func setupView() {
+    
+    // MARK: - UI Setup
+    private func setupView() {
         self.backgroundColor = .white
+        setupIcons()
+        setupConstraints()
+    }
+    
+    
+    private func setupIcons() {
+        [gridIcon, videoIcon, tagIcon].forEach { icon in
+            let tap = UITapGestureRecognizer(target: self, action: #selector(handleIconTap(_:)))
+            icon.addGestureRecognizer(tap)
+            icon.isUserInteractionEnabled = true
+        }
+    }
+    
+    
+    private func setupConstraints() {
         self.snp.makeConstraints { make in
             make.height.equalTo(35)
         }
@@ -81,20 +103,6 @@ class CustomTabBar: UIView {
             }
         }
         
-        
-        
-        let gridTap = UITapGestureRecognizer(target: self, action: #selector(handleIconTap(_:)))
-        gridIcon.addGestureRecognizer(gridTap)
-        gridIcon.isUserInteractionEnabled = true
-        
-        let videoTap = UITapGestureRecognizer(target: self, action: #selector(handleIconTap(_:)))
-        videoIcon.addGestureRecognizer(videoTap)
-        videoIcon.isUserInteractionEnabled = true
-        
-        let tagTap = UITapGestureRecognizer(target: self, action: #selector(handleIconTap(_:)))
-        tagIcon.addGestureRecognizer(tagTap)
-        tagIcon.isUserInteractionEnabled = true
-                
         sliderView.snp.makeConstraints { make in
             make.height.equalTo(1)
             make.width.equalTo(self.snp.width).dividedBy(3)
@@ -103,43 +111,32 @@ class CustomTabBar: UIView {
         }
     }
     
-    @objc func handleIconTap(_ gesture: UITapGestureRecognizer) {
+    
+    // MARK: - Actions
+    @objc private func handleIconTap(_ gesture: UITapGestureRecognizer) {
         guard let view = gesture.view else { return }
         let tabIndex: TabIndex
-           let targetX: CGFloat
-
-        switch view {
-            case gridIcon:
-                tabIndex = .first
-                targetX = 0
-            case videoIcon:
-                tabIndex = .second
-                targetX = self.bounds.width / 3
-            case tagIcon:
-                tabIndex = .third
-                targetX = (self.bounds.width / 3) * 2
-            default:
-                return
-            }
-            
-            delegate?.didSelectTab(at: tabIndex)
+        let targetX: CGFloat
         
-        // 애니메이션으로 슬라이더 이동
-        self.sliderLeadingConstraint?.update(offset: targetX)
+        switch view {
+        case gridIcon:
+            tabIndex = .first
+            targetX = 0
+        case videoIcon:
+            tabIndex = .second
+            targetX = self.bounds.width / 3
+        case tagIcon:
+            tabIndex = .third
+            targetX = (self.bounds.width / 3) * 2
+        default:
+            return
+        }
+        
+        delegate?.didSelectTab(at: tabIndex)
+        
+        sliderLeadingConstraint?.update(offset: targetX)
         UIView.animate(withDuration: 0.3) {
             self.layoutIfNeeded()
         }
     }
-    
-    @objc func didTapFirstItem() {
-          delegate?.didSelectTab(at: .first)
-      }
-
-      @objc func didTapSecondItem() {
-          delegate?.didSelectTab(at: .second)
-      }
-
-      @objc func didTapThirdItem() {
-          delegate?.didSelectTab(at: .third)
-      }
 }

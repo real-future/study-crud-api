@@ -11,7 +11,7 @@ import SnapKit
 class HomePageViewController: UIViewController {
     
     // MARK: - UI Components
-    private lazy var topBoxView: UIView = {
+    private let topBoxView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.layer.cornerRadius = 20
@@ -19,14 +19,14 @@ class HomePageViewController: UIViewController {
         return view
     }()
     
-    private lazy var spartaLogoImageView: UIImageView = {
+    private let spartaLogoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "spartaLogo")
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
     
-    private lazy var titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "WhatToDo"
         label.font = UIFont.boldSystemFont(ofSize: 50)
@@ -34,7 +34,7 @@ class HomePageViewController: UIViewController {
         return label
     }()
     
-    private lazy var subTitleLabel: UILabel = {
+    private let subTitleLabel: UILabel = {
         let label = UILabel()
         label.text = "Spartacodingclub Homework"
         label.font = UIFont.systemFont(ofSize: 14, weight: .light)
