@@ -45,7 +45,8 @@
 
 
 
-### **<Random Cat>**
+### [Random Cat]
+
 - 고양이 사진을 랜덤으로 받아볼 수 있는 페이지입니다.
   
 <img src="https://github.com/real-future/study-crud-api/assets/85066307/d779ebbf-f828-4b13-bfd9-96ad3a78756d" width="200"/>
