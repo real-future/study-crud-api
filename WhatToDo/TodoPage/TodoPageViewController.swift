@@ -12,9 +12,9 @@ import CoreData
 class TodoPageViewController: UIViewController {
     
     // MARK: - Properties
-    
     private let todoDataManager = CoreDataManager.shared
     private var todos = [TodoData]()
+    
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -23,6 +23,7 @@ class TodoPageViewController: UIViewController {
         tableView.register(TodoTableViewCell.self, forCellReuseIdentifier: "TodoTableViewCell")
         return tableView
     }()
+    
     
     private lazy var floatingButton: UIButton = {
         let button = UIButton(frame: .zero)
@@ -56,13 +57,19 @@ class TodoPageViewController: UIViewController {
     }
     
     
-    // MARK: - Setup
+    // MARK: - UI Setup
     private func setupUI() {
         view.backgroundColor = .white
         
         setNavigationBar()
         setupConstraints()
     }
+    
+    
+    private func setNavigationBar() {
+        navigationItem.rightBarButtonItem = editButtonItem
+    }
+    
     
     private func setupConstraints() {
         view.addSubview(tableView)
@@ -79,12 +86,61 @@ class TodoPageViewController: UIViewController {
     }
     
     
-    private func setNavigationBar() {
-        navigationItem.rightBarButtonItem = editButtonItem
+    // MARK: - Button Actions
+    @objc func addButtonTapped() {
+        presentAlert()
     }
     
     
-    @objc func addButtonTapped() {
+    // MARK: - Data Handling
+    private func fetchDataAndReloadTableView() {
+        // 데이터 불러오기
+        todoDataManager.fetchData()
+        // isCompleted가 false인 할 일만 필터링
+        todos = todoDataManager.todoList.filter { !$0.isCompleted }
+        // 테이블 뷰 리로드
+        tableView.reloadData()
+    }
+    
+    
+    private func saveChangesToCoreData() {
+        do {
+            try todoDataManager.context.save()
+        } catch {
+            print("Error saving Core Data changes: \(error)")
+        }
+    }
+    
+    
+    
+    
+    func addNewTask(title: String) {
+        guard let newTodo = createTodoEntity(title: title) else { return }
+        saveTodoEntity(todo: newTodo)
+        fetchDataAndReloadTableView()
+    }
+    
+    
+    private func createTodoEntity(title: String) -> TodoData? {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+        guard let entityDescription = NSEntityDescription.entity(forEntityName: "TodoData", in: context) else { return nil }
+        guard let newTodo = NSManagedObject(entity: entityDescription, insertInto: context) as? TodoData else { return nil }
+        
+        newTodo.title = title
+        newTodo.createDate = Date()
+        newTodo.id = UUID()
+        newTodo.isCompleted = false
+        return newTodo
+    }
+    
+    
+    private func saveTodoEntity(todo: TodoData) {
+        let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
+        appDelegate.saveContext()
+    }
+    
+    
+    @objc func presentAlert() {
         let addAlert = UIAlertController(title: "Add a Task", message: "28자 이내로 입력해주세요", preferredStyle: .alert)
         
         addAlert.addTextField {(textField: UITextField) in
@@ -111,29 +167,6 @@ class TodoPageViewController: UIViewController {
     }
     
     
-    // 새로운 태스크를 추가하는 메서드
-    func addNewTask(title: String) {
-        // Core Data context 가져오기
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-        
-        // TodoData Entity
-        guard let entityDescription = NSEntityDescription.entity(forEntityName: "TodoData", in: context) else { return }
-        guard let object = NSManagedObject(entity: entityDescription, insertInto: context) as? TodoData else { return }
-        
-        // 텍스트 필드에 입력된 값을 저장
-        object.title = title
-        object.createDate = Date()
-        object.id = UUID()
-        object.isCompleted = false
-        
-        // Core Data에 저장
-        let appDelegate = (UIApplication.shared.delegate as! AppDelegate)
-        appDelegate.saveContext()
-        
-        // 새로운 데이터를 가져오고 테이블 뷰를 리로드
-        fetchDataAndReloadTableView()
-    }
-    
     func showToast(message: String, duration: TimeInterval = 5.0) {
         let toastLabel = UILabel(frame: CGRect(x: 16, y: self.view.frame.size.height - 100, width: self.view.frame.size.width - 32, height: 35))
         toastLabel.backgroundColor = UIColor.black
@@ -152,27 +185,6 @@ class TodoPageViewController: UIViewController {
         }, completion: { _ in
             toastLabel.removeFromSuperview()
         })
-    }
-    
-    
-    
-    // MARK: - Data
-    
-    private func fetchDataAndReloadTableView() {
-        // 데이터 불러오기
-        todoDataManager.fetchData()
-        // isCompleted가 false인 할 일만 필터링
-        todos = todoDataManager.todoList.filter { !$0.isCompleted }
-        // 테이블 뷰 리로드
-        tableView.reloadData()
-    }
-    
-    private func saveChangesToCoreData() {
-        do {
-            try todoDataManager.context.save()
-        } catch {
-            print("Error saving Core Data changes: \(error)")
-        }
     }
 }
 
@@ -235,6 +247,18 @@ extension TodoPageViewController: TodoTableViewCellDelegate {
                 showToast(message: "🎉 완료된 할 일은 donePage에서 확인하실 수 있습니다. 🎉")
             }
         }
+    }
+    
+    // 텍스트 필드 애니메이션-흔들기
+    func shakeTextField(_ textField: UITextField) {
+        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
+        animation.duration = 0.6
+        animation.values = [-20.0, 20.0, -20.0, 20.0, -10.0, 10.0, -5.0, 5.0, 0.0]
+        textField.layer.add(animation, forKey: "shake")
+        
+        textField.layer.borderColor = UIColor.red.cgColor
+        textField.layer.borderWidth = 1.0
     }
 }
 
@@ -328,18 +352,4 @@ extension TodoPageViewController: UITextFieldDelegate {
         }
         return true
     }
-    
-    
-    // 텍스트 필드 애니메이션-흔들기
-    func shakeTextField(_ textField: UITextField) {
-        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
-        animation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
-        animation.duration = 0.6
-        animation.values = [-20.0, 20.0, -20.0, 20.0, -10.0, 10.0, -5.0, 5.0, 0.0]
-        textField.layer.add(animation, forKey: "shake")
-        
-        textField.layer.borderColor = UIColor.red.cgColor
-        textField.layer.borderWidth = 1.0
-    }
-    
 }
