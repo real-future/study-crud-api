@@ -25,7 +25,7 @@ class TodoPageViewController: UIViewController {
     }()
     
     
-    private lazy var floatingButton: UIButton = {
+    private let floatingButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.backgroundColor = .skyBlue
         button.layer.cornerRadius = 25
