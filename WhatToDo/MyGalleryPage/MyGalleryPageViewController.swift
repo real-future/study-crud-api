@@ -315,53 +315,61 @@ class MyGalleryPageViewController: UIViewController {
         labelsStack.distribution = .fillEqually
         labelsStack.spacing = 16
         
+        view.addSubview(profileImageView)
+        view.addSubview(labelsStack)
+        view.addSubview(infoStackView)
+        view.addSubview(followMessageStackView)
+        view.addSubview(moreButton)
+        view.addSubview(dividerView)
+        view.addSubview(customTabBar)
+        view.addSubview(collectionView)
+        view.addSubview(customBottomTabBar)
         view.addSubview(customNavigationBar)
+        customNavigationBar.addSubview(titleLabel)
+        customNavigationBar.addSubview(closeButton)
+        customNavigationBar.addSubview(menuButton)
+        
         customNavigationBar.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top)
             make.left.right.equalTo(view)
             make.height.equalTo(44)  // 네비게이션 바 높이
         }
         
-        customNavigationBar.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalTo(customNavigationBar)
             make.centerY.equalTo(customNavigationBar)
         }
         
-        customNavigationBar.addSubview(closeButton)
         closeButton.snp.makeConstraints { make in
             make.left.equalTo(customNavigationBar.snp.left).offset(16)
             make.centerY.equalTo(customNavigationBar)
+            
         }
         
-        customNavigationBar.addSubview(menuButton)
+        
         menuButton.snp.makeConstraints { make in
             make.right.equalTo(customNavigationBar.snp.right).offset(-16)
             make.centerY.equalTo(customNavigationBar)
             make.size.equalTo(CGSize(width: 24, height: 24))
         }
         
-        view.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { (make) in
             make.left.equalTo(view.snp.left).offset(14)
             make.top.equalTo(titleLabel.snp.bottom).offset(14)
             make.width.height.equalTo(100)
         }
         
-        view.addSubview(labelsStack)
         labelsStack.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(-28)
             make.centerY.equalTo(profileImageView)
         }
         
-        view.addSubview(infoStackView)
         infoStackView.snp.makeConstraints { (make) in
             make.top.equalTo(profileImageView.snp.bottom).offset(14)
             make.left.equalTo(profileImageView)
             make.right.lessThanOrEqualTo(labelsStack)
         }
         
-        view.addSubview(followMessageStackView)
         followMessageStackView.snp.makeConstraints { make in
             make.height.equalTo(30)
             make.top.equalTo(infoStackView.snp.bottom).offset(14)
@@ -369,15 +377,6 @@ class MyGalleryPageViewController: UIViewController {
             make.right.lessThanOrEqualTo(moreButton.snp.left).offset(-8)
         }
         
-        followButton.snp.makeConstraints { make in
-            make.width.equalTo(followMessageStackView.snp.width).multipliedBy(0.5).offset(-4)
-        }
-        
-        messageButton.snp.makeConstraints { make in
-            make.width.equalTo(followMessageStackView.snp.width).multipliedBy(0.5).offset(-4)
-        }
-        
-        view.addSubview(moreButton)
         moreButton.snp.makeConstraints { make in
             make.left.equalTo(followMessageStackView.snp.right).offset(8)
             make.right.equalTo(view.snp.right).offset(-14)
@@ -385,7 +384,18 @@ class MyGalleryPageViewController: UIViewController {
             make.centerY.equalTo(followMessageStackView)
         }
         
-        view.addSubview(dividerView)
+        followButton.snp.makeConstraints { make in
+            make.width.equalTo(followMessageStackView.snp.width).multipliedBy(0.5).offset(-4)
+        }
+        
+        
+        moreButton.snp.makeConstraints { make in
+            make.left.equalTo(followMessageStackView.snp.right).offset(8)
+            make.right.equalTo(view.snp.right).offset(-14)
+            make.width.height.equalTo(30)
+            make.centerY.equalTo(followMessageStackView)
+        }
+        
         dividerView.snp.makeConstraints { make in
             make.top.equalTo(followMessageStackView.snp.bottom).offset(10)
             make.left.equalTo(profileImageView)
@@ -393,28 +403,25 @@ class MyGalleryPageViewController: UIViewController {
             make.height.equalTo(1)
         }
         
-        view.addSubview(customTabBar)
         customTabBar.snp.makeConstraints { make in
             make.left.right.equalTo(view)
             make.height.equalTo(35)
             make.top.equalTo(dividerView.snp.bottom).offset(2)
         }
         
-        view.addSubview(collectionView)
         collectionView.snp.makeConstraints { make in
             make.left.right.bottom.equalTo(view)
             make.top.equalTo(customTabBar.snp.bottom)
         }
         
         
-        view.addSubview(customBottomTabBar)
         customBottomTabBar.snp.makeConstraints { make in
             make.left.right.bottom.equalTo(view)
             make.height.equalTo(85)
+            
         }
     }
 }
-
 
 // MARK: - Extension : UICollectionViewDelegateFlowLayout
 extension MyGalleryPageViewController: UICollectionViewDataSource {
